@@ -13,7 +13,7 @@ class Sekolah extends Model
     }
 
     public function pendidikan(){
-        return $this->belongsTo('App\Models\pendidikan');
+        return $this->belongsTo('App\Models\Pendidikan');
     }
 
     public function kondisiKecamatan($query){
