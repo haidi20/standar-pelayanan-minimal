@@ -45,6 +45,7 @@ class KuisionerController extends Controller
             $pertanyaan_id                  = $item['pertanyaan'];
             $sekolah_id                     = $item['sekolah'];
             $isi                            = $item['isi'];
+            
             $inputJawaban                   = Jawaban::updateOrCreate(compact('sekolah_id', 'pertanyaan_id'));
             $inputJawaban->isi              = $item['isi'];
             $inputJawaban->save();
