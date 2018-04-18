@@ -10,7 +10,7 @@ use Auth;
 use App\User;
 use App\Models\Sekolah;
 use App\Models\Kecamatan;
-use App\Models\pendidikan;
+use App\Models\Pendidikan;
 
 class PenggunaController extends Controller
 {
