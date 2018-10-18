@@ -18,7 +18,7 @@ class import extends Controller {
     DB::table('kecamatan')->delete();
     DB::table('pendidikan')->delete();
     DB::table('pertanyaan')->delete();
-    //end delete
+    //end delete nata
 
     //truncate
     DB::table('sekolah')->truncate();
