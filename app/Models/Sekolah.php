@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sekolah extends Model
 {
     protected $table = 'sekolah';
+    protected $guarded = []; //TAMBAHKAN LINE INI
 
     public function kecamatan(){
         return $this->belongsTo('App\Models\Kecamatan');

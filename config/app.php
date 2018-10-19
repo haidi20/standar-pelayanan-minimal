@@ -167,7 +167,6 @@ return [
          * Package Service Providers...
          */
         Laravel\Tinker\TinkerServiceProvider::class,
-        Maatwebsite\Excel\ExcelServiceProvider::class,
         Sentry\SentryLaravel\SentryLaravelServiceProvider::class,
 
         /*
@@ -178,6 +177,10 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Providers\EventServiceProvider::class,
         App\Providers\RouteServiceProvider::class,
+
+        /* New Package */
+        Maatwebsite\Excel\ExcelServiceProvider::class,
+        Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
@@ -228,7 +231,9 @@ return [
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
         'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
+        /* New Package */
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
+        'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];
