@@ -7,6 +7,9 @@
             <label for="tahun" class="form-label">Tahun</label>
             <select name="tahun" id="tahun" class="form-control">
               <option value="">Pilih Tahun</option>
+              @foreach($tahun as $index => $item)
+                <option value="{{ $item }}" {{ request('tahun') == $item ? 'selected' : '' }}>{{ $item }}</option>
+              @endforeach
             </select>
           </div>
         </div>
@@ -17,6 +20,8 @@
             <label for="periode" class="form-label">Periode</label>
             <select name="periode" id="periode" class="form-control">
               <option value="">Pilih Periode</option>
+              <option value="1">January - Juni</option>
+              <option value="2">Juli - Desember</option>
             </select>
           </div>
         </div>
@@ -27,6 +32,9 @@
             <label for="pendidikan" class="form-label">Jenjang Pendidikan</label>
             <select name="pendidikan" id="pendidikan" class="form-control">
               <option value="">Semua Jenjang Pendidikan</option>
+              @foreach($pendidikan as $index => $item)
+                <option value="{{ $item->id }}" {{request('pendidikan') == $item->id ? 'selected' : ''}}>{{ $item->nama }}</option>
+              @endforeach
             </select>
           </div>
         </div>

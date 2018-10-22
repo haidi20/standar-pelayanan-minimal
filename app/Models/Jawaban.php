@@ -14,7 +14,12 @@ class Jawaban extends Model
     }
 
     public function scopeKondisiJawaban($query,$pertanyaan,$sekolah){
-        return $query->where('pertanyaan_id',$pertanyaan)
+        $kondisi = $query->where('pertanyaan_id',$pertanyaan)
               		 ->where('sekolah_id',$sekolah);
+        if(request('tahun')){
+        	$kondisi = $kondisi->whereYear('created_at', request('tahun'));
+        }
+
+        return $kondisi;
     }
 }

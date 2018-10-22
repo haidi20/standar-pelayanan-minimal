@@ -9,6 +9,8 @@ use App\Models\Pertanyaan;
 use App\Models\Jawaban;
 use App\Models\Sekolah;
 
+use Carbon\Carbon;
+
 class KuisionerController extends Controller
 {
     public function index(){
@@ -48,6 +50,7 @@ class KuisionerController extends Controller
             
             $inputJawaban                   = Jawaban::updateOrCreate(compact('sekolah_id', 'pertanyaan_id'));
             $inputJawaban->isi              = $item['isi'];
+            $inputJawaban->created_at       = Carbon::now();
             $inputJawaban->save();
         }
         // return $nampung;

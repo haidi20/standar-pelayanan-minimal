@@ -2,11 +2,13 @@
 @section('script-bottom')
   <script>
     function kirim(){
+      var tahun       = $('#tahun').val();
       var sekolah     = $('#sekolah').val();
       var kecamatan   = $('#kecamatan').val();
       var pendidikan  = $('#pendidikan').val();
 
-      var urlParameter = '?sekolah='+sekolah+'&kecamatan='+kecamatan+'&pendidikan='+pendidikan;
+
+      var urlParameter = '?sekolah='+sekolah+'&kecamatan='+kecamatan+'&pendidikan='+pendidikan+'&tahun='+tahun;
 
       $.ajax({
         url: '{{ url('dashboard/persen') }}'+urlParameter,

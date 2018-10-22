@@ -4,8 +4,10 @@ namespace App\Supports;
 
 class Rumus
 {
+  // fungsi kondisi_sekolah ada di helpers.php
 
-  public function IPDua($jawSatu,$jawDua){
+  // untuk IP 2
+  public function dua($jawSatu,$jawDua){
       if ($jawSatu != 0 && $jawDua != 0) {
           $rumus = ($jawDua / $jawSatu) * 100 ;
       }else{
@@ -15,51 +17,14 @@ class Rumus
       return kondisi_sekolah($rumus);
   }
 
-  public function IPEmpat($jawSatu){
+  // untuk IP 4, 5.1, 5.2, 7.1
+  // batas merupakan jika jawSatu mencapai $batas tersebut
+  public function empatLimaTujuh($jawSatu, $batas)
+  {
       if ($jawSatu != 0) {
-          $rumus = $jawSatu == 1?100:0;
+          $rumus = $jawSatu == $batas ? 100 : 0;
       }else{
           $rumus = 0;
-      }
-
-      return kondisi_sekolah($rumus);
-  }
-
-  public function limaSatu($jawSatu){
-      if ($jawSatu != 0) {
-          $rumus = $jawSatu == 1?100:0;
-      }else{
-          $rumus = 0 ;
-      }
-
-      return kondisi_sekolah($rumus);
-  }
-
-  public function limaDua($jawSatu){
-      if ($jawSatu != 0) {
-          $rumus = $jawSatu >= 6?100:0;
-      }else{
-          $rumus = 0 ;
-      }
-
-      return kondisi_sekolah($rumus);
-  }
-
-  public function tujuhSatu($jawSatu){
-      if ($jawSatu != 0) {
-          $rumus = $jawSatu >= 2?100:0;
-      }else{
-          $rumus = 0 ;
-      }
-
-      return kondisi_sekolah($rumus);
-  }
-
-  public function tujuhDua($jawSatu){
-      if ($jawSatu != 0) {
-          $rumus = $jawSatu >= 2?100:0;
-      }else{
-          $rumus = 0 ;
       }
 
       return kondisi_sekolah($rumus);
@@ -90,44 +55,84 @@ class Rumus
       return kondisi_sekolah($rumus);
   }
 
-  public function limaBelas($data){
-      /*CATATAN
-      /r = rumus
-      /s = semua
-      /j = jumlah
-      /h = hasil akhir
-      */
+  public function limaBelas($data)
+  {
+      $nomor = 1;
+      $jumlahBuku = [];
 
       foreach ($data as $index => $item) {
-          $bukuSatu[$index]   = $data[$index][1] + $data[$index][7] + $data[$index][13] +
-                      $data[$index][19]+ $data[$index][25];
-          $bukuDua[$index]    = $data[$index][2] + $data[$index][8] + $data[$index][14] +
-                      $data[$index][20]+ $data[$index][26];
-          $bukuTiga[$index]   = $data[$index][3] + $data[$index][9] + $data[$index][15] +
-                      $data[$index][21]+ $data[$index][27];
-          $bukuEmpat[$index]  = $data[$index][4] + $data[$index][10] + $data[$index][16] +
-                      $data[$index][22]+ $data[$index][28];
-          $bukuLima[$index]   = $data[$index][5] + $data[$index][11] + $data[$index][17] +
-                      $data[$index][23]+ $data[$index][29];
-          $bukuEnam[$index]   = $data[$index][6] + $data[$index][12] + $data[$index][18] +
-                      $data[$index][24]+ $data[$index][30];
+        for($i = 0; $i <=5; $i++){
+          $jumlahBuku[$index][$i] = $this->limaBelasPenjumlahan($data, $index, $i, 'pertama'); 
+          $rumusBuku[$index][$i]  = $this->limaBelasRumus($jumlahBuku, $index, $i, 'pertama');
+        }
 
-          $r_bukuSatu [$index]  = $bukuSatu [$index]>= (10 * 5)? 1: 0;
-          $r_bukuDua  [$index]  = $bukuDua  [$index]>= (10 * 5)? 1: 0;
-          $r_bukuTiga [$index]  = $bukuTiga [$index]>= (10 * 5)? 1: 0;
-          $r_bukuEmpat[$index]  = $bukuEmpat[$index]>= (10 * 5)? 1: 0;
-          $r_bukuLima [$index]  = $bukuLima [$index]>= (10 * 5)? 1: 0;
-          $r_bukuEnam [$index]  = $bukuEnam [$index]>= (10 * 5)? 1: 0;
-
-          $j_buku     [$index]  = $r_bukuSatu [$index] + $r_bukuDua  [$index] + $r_bukuTiga [$index] +
-                                  $r_bukuEmpat[$index] + $r_bukuLima [$index] + $r_bukuEnam [$index] ;
-
-          $r_buku     [$index]  = ($j_buku[$index] / 6) * 100;
-          $h_buku     [$index]  = kondisi_sekolah($r_buku[$index]);
+        $jumlahSemuaBuku[$index]  = $this->limaBelasPenjumlahan($rumusBuku, $index);
+        $rumusSemuaBuku[$index]   = $this->limaBelasRumus($jumlahSemuaBuku, $index);
+        $totalBuku[$index]        = kondisi_sekolah($rumusSemuaBuku[$index]);
       }
 
-      return $h_buku;
+      return $totalBuku;
   }
+
+  public function limaBelasPenjumlahan($data, $index, $nomor = null, $kondisi = null)
+  {
+      if($kondisi == 'pertama'){
+          return  $data[$index][$nomor] + $data[$index][$nomor + 6] + 
+                  $data[$index][$nomor + 12] + $data[$index][$nomor + 18]+ 
+                  $data[$index][$nomor + 24];
+      }else{
+          return $data[$index][0] + $data[$index][1] + $data[$index][2] +
+                 $data[$index][3] + $data[$index][4] + $data[$index][5];
+      }
+  }
+
+  public function limaBelasRumus($data, $index, $i = null, $kondisi = null)
+  {
+    if($kondisi == 'pertama'){
+      return $data[$index][$i] >= 50 ? 1 : 0;
+    }else{
+      return ($data[$index] / 6) * 100; 
+    }
+  }
+
+  // public function limaBelas($data){
+  //     /*CATATAN
+  //     /r = rumus
+  //     /s = semua
+  //     /j = jumlah
+  //     /h = hasil akhir
+  //     */
+
+  //     foreach ($data as $index => $item) {
+  //         $bukuSatu[$index]   = $data[$index][1] + $data[$index][7] + $data[$index][13] +
+  //                     $data[$index][19]+ $data[$index][25];
+  //         $bukuDua[$index]    = $data[$index][2] + $data[$index][8] + $data[$index][14] +
+  //                     $data[$index][20]+ $data[$index][26];
+  //         $bukuTiga[$index]   = $data[$index][3] + $data[$index][9] + $data[$index][15] +
+  //                     $data[$index][21]+ $data[$index][27];
+  //         $bukuEmpat[$index]  = $data[$index][4] + $data[$index][10] + $data[$index][16] +
+  //                     $data[$index][22]+ $data[$index][28];
+  //         $bukuLima[$index]   = $data[$index][5] + $data[$index][11] + $data[$index][17] +
+  //                     $data[$index][23]+ $data[$index][29];
+  //         $bukuEnam[$index]   = $data[$index][6] + $data[$index][12] + $data[$index][18] +
+  //                     $data[$index][24]+ $data[$index][30];
+
+  //         $r_bukuSatu [$index]  = $bukuSatu [$index]>= (10 * 5)? 1: 0;
+  //         $r_bukuDua  [$index]  = $bukuDua  [$index]>= (10 * 5)? 1: 0;
+  //         $r_bukuTiga [$index]  = $bukuTiga [$index]>= (10 * 5)? 1: 0;
+  //         $r_bukuEmpat[$index]  = $bukuEmpat[$index]>= (10 * 5)? 1: 0;
+  //         $r_bukuLima [$index]  = $bukuLima [$index]>= (10 * 5)? 1: 0;
+  //         $r_bukuEnam [$index]  = $bukuEnam [$index]>= (10 * 5)? 1: 0;
+
+  //         $j_buku     [$index]  = $r_bukuSatu [$index] + $r_bukuDua  [$index] + $r_bukuTiga [$index] +
+  //                                 $r_bukuEmpat[$index] + $r_bukuLima [$index] + $r_bukuEnam [$index] ;
+
+  //         $r_buku     [$index]  = ($j_buku[$index] / 6) * 100;
+  //         $h_buku     [$index]  = kondisi_sekolah($r_buku[$index]);
+  //     }
+
+  //     return $h_buku;
+  // }
 
   public function tujuhBelas($data){
       foreach ($data as $index => $item) {
@@ -196,3 +201,53 @@ class Rumus
   }
 
 }
+
+// public function IPEmpat($jawSatu){
+  //     if ($jawSatu != 0) {
+  //         $rumus = $jawSatu == 1?100:0;
+  //     }else{
+  //         $rumus = 0;
+  //     }
+
+  //     return kondisi_sekolah($rumus);
+  // }
+
+  // public function limaSatu($jawSatu){
+  //     if ($jawSatu != 0) {
+  //         $rumus = $jawSatu == 1?100:0;
+  //     }else{
+  //         $rumus = 0 ;
+  //     }
+
+  //     return kondisi_sekolah($rumus);
+  // }
+
+  // public function limaDua($jawSatu){
+  //     if ($jawSatu != 0) {
+  //         $rumus = $jawSatu >= 6?100:0;
+  //     }else{
+  //         $rumus = 0 ;
+  //     }
+
+  //     return kondisi_sekolah($rumus);
+  // }
+
+  // public function tujuhSatu($jawSatu){
+  //     if ($jawSatu != 0) {
+  //         $rumus = $jawSatu >= 2?100:0;
+  //     }else{
+  //         $rumus = 0 ;
+  //     }
+
+  //     return kondisi_sekolah($rumus);
+  // }
+
+  // public function tujuhDua($jawSatu){
+  //     if ($jawSatu != 0) {
+  //         $rumus = $jawSatu >= 2?100:0;
+  //     }else{
+  //         $rumus = 0 ;
+  //     }
+
+  //     return kondisi_sekolah($rumus);
+  // }
