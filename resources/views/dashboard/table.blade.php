@@ -37,7 +37,9 @@
             <label for="kecamatan" class="form-label">Kecamatan</label>
             <select name="kecamatan" id="kecamatan" class="form-control">
               <option value="">Kota Samarinda</option>
-              
+               @foreach($kecamatan as $index => $item)
+                  <option value="{{ $item->id }}" {{request('kecamatan') == $item->id ? 'selected' : ''}}>{{ $item->nama }}</option>
+                @endforeach
             </select>
           </div>
         </div>
@@ -76,6 +78,7 @@
             <tr>
               <td>{{ $index + 1 }}</td>
               <td align="center">{{ $ip[$index] }}</td>
+              <td></td>
             </tr>
          @endforeach
         </tbody>

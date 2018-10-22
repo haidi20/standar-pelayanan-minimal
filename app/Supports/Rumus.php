@@ -5,7 +5,7 @@ namespace App\Supports;
 class Rumus
 {
 
-  public function duaSatu($jawSatu,$jawDua){
+  public function IPDua($jawSatu,$jawDua){
       if ($jawSatu != 0 && $jawDua != 0) {
           $rumus = ($jawDua / $jawSatu) * 100 ;
       }else{
@@ -15,17 +15,7 @@ class Rumus
       return kondisi_sekolah($rumus);
   }
 
-  public function duaDua($jawSatu, $jawDua){
-      if ($jawSatu != 0 && $jawDua != 0) {
-          $rumus = ($jawDua / $jawSatu) * 100 ;
-      }else{
-          $rumus = 0;
-      }
-
-      return kondisi_sekolah($rumus);
-  }
-
-  public function empat($jawSatu){
+  public function IPEmpat($jawSatu){
       if ($jawSatu != 0) {
           $rumus = $jawSatu == 1?100:0;
       }else{

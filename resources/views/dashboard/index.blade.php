@@ -2,8 +2,14 @@
 @section('script-bottom')
   <script>
     function kirim(){
+      var sekolah     = $('#sekolah').val();
+      var kecamatan   = $('#kecamatan').val();
+      var pendidikan  = $('#pendidikan').val();
+
+      var urlParameter = '?sekolah='+sekolah+'&kecamatan='+kecamatan+'&pendidikan='+pendidikan;
+
       $.ajax({
-        url: '{{ route('dashboard.persen') }}?sekolah=',
+        url: '{{ url('dashboard/persen') }}'+urlParameter,
         type: 'GET',
         cache: false,
         beforeSend:function(){
@@ -33,9 +39,9 @@
 
       $.each(data, function(index, item){
         rows += '<tr>'+
-                      '<td class="pl-1 pr-1">'+manage_row(index)+'</td>'+
-                      '<td class="pl-1 pr-1"></td>'+
-                      '<td class="pl-1 pr-1"></td>'+
+                      '<td >'+manage_row(index)+'</td>'+
+                      '<td align="center">'+item.name+'</td>'+
+                      '<td align="center">'+item.value+' %</td>'+
                     '</tr>';
         // console.log(item);
       });

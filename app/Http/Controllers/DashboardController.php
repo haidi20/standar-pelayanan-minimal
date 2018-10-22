@@ -7,6 +7,8 @@ use App\Http\Controllers\Controller;
 
 use App\Models\Jawaban;
 use App\Models\Sekolah;
+use App\Models\Kecamatan;
+use App\Models\Pendidikan;
 
 use App\Supports\IndikatorPencapaian;
 use App\Supports\Rumus;
@@ -17,54 +19,31 @@ class DashboardController extends Controller
                           IndikatorPencapaian $ip, 
                           Jawaban $jawaban, 
                           Sekolah $sekolah,
-                          Rumus $rumus
+                          Kecamatan $kecamatan,
+                          Pendidikan $pendidikan,
+                          Rumus $rumus,
+                          Request $request
                         ){
-        $this->ip       = $ip;
-        $this->jawaban  = $jawaban;
-        $this->sekolah  = $sekolah;
-        $this->rumus    = $rumus;
+        $this->ip           = $ip;
+        $this->jawaban      = $jawaban;
+        $this->sekolah      = $sekolah;
+        $this->kecamatan    = $kecamatan;
+        $this->pendidikan   = $pendidikan;
+        $this->rumus        = $rumus;
+        $this->request      = $request;
     }
 
     public function index()
     {
         $sekolah      = $this->sekolah->get();
+        $kecamatan    = $this->kecamatan->get();
+        $pendidikan   = $this->pendidikan->get();
         $ip           = config('library.IP');
 
-        return view('dashboard.index', compact('ip', 'sekolah'));
+        return view('dashboard.index', compact('ip', 'sekolah', 'kecamatan', 'pendidikan'));
     }
 
-    public function persen()
-    {
-        $ip           = config('library.IP');
-        $sekolah = $this->sekolah->kondisi()->get();
-
-        foreach ($sekolah as $index => $item) {
-            $duaSatu[$item->id]       = $this->IpDua($item->id, 'looping', 2, 3);
-            $duaDua[$item->id]       = $this->IpDua($item->id, 'looping', 9, 10);
-        }
-
-        $jawaban = [
-            ['name' => $ip[0], 'isi' => $this->IpDua($duaSatu, 'hasil')],
-            ['name' => $ip[1], 'isi' => $this->IpDua($duaDua, 'hasil')],
-            ['name' => $ip[2], 'isi' => 0],
-            ['name' => $ip[3], 'isi' => 0],
-            ['name' => $ip[4], 'isi' => 0],
-            ['name' => $ip[5], 'isi' => 0],
-            ['name' => $ip[6], 'isi' => 0],
-            ['name' => $ip[7], 'isi' => 0],
-            ['name' => $ip[8], 'isi' => 0],
-            ['name' => $ip[9], 'isi' => 0],
-            ['name' => $ip[10], 'isi' => 0],
-            ['name' => $ip[11], 'isi' => 0],
-            ['name' => $ip[12], 'isi' => 0],
-            ['name' => $ip[13], 'isi' => 0],
-            ['name' => $ip[14], 'isi' => 0],
-        ];
-
-        return response()->json($jawaban);
-    }
-
-    public function IpDua($value, $kondisi, $jawSatu = null, $jawDua = null)
+    public function IPDua($value, $kondisi, $jawSatu = null, $jawDua = null)
     {
         $jawaban = '';
 
@@ -72,12 +51,59 @@ class DashboardController extends Controller
             $jawSatu  = kondisi_null($this->jawaban->kondisiJawaban($jawSatu, $value)->value('isi'));
             $jawDua   = kondisi_null($this->jawaban->kondisiJawaban($jawDua, $value)->value('isi'));
 
-            $jawaban  = number_format($this->rumus->duaSatu($jawSatu,$jawDua));
+            $jawaban  = number_format($this->rumus->IPDua($jawSatu,$jawDua));
             return $jawaban;
         }elseif($kondisi == 'hasil'){
             $jawaban      = kondisi_jumlah_data($value);
             return $jawaban;
         }
+    }
+
+    public function IPEmpat($value, $kondisi, $jawSatu = null)
+    {
+        $jawaban = '';
+
+        if($kondisi == 'looping'){
+            $jawSatu  = kondisi_null($this->jawaban->kondisiJawaban($jawSatu, $value)->value('isi'));
+
+            $jawaban  = number_format($this->rumus->IPEmpat($jawSatu));
+            return $jawaban;
+        }elseif($kondisi == 'hasil'){
+            $jawaban      = kondisi_jumlah_data($value);
+            return $jawaban;
+        }
+    }
+
+    public function persen()
+    {
+        $ip         = config('library.IP');
+        $sekolah    = $this->sekolah->kondisi()->get();
+
+        foreach ($sekolah as $index => $item) {
+            $duaSatu[$item->id] = $this->IPDua($item->id, 'looping', 2, 3);
+            $duaDua[$item->id]  = $this->IPDua($item->id, 'looping', 9, 10);
+            $empat[$item->id]   = $this->IPEmpat($item->id, 'looping', 11);
+        }
+
+        $jawaban = [
+            ['name' => $ip[0], 'value' => $this->IPDua($duaSatu, 'hasil')],
+            ['name' => $ip[1], 'value' => $this->IPDua($duaDua, 'hasil')],
+            ['name' => $ip[2], 'value' => $this->IPEmpat($empat, 'hasil')],
+            ['name' => $ip[3], 'value' => 0],
+            ['name' => $ip[4], 'value' => 0],
+            ['name' => $ip[5], 'value' => 0],
+            ['name' => $ip[6], 'value' => 0],
+            ['name' => $ip[7], 'value' => 0],
+            ['name' => $ip[8], 'value' => 0],
+            ['name' => $ip[9], 'value' => 0],
+            ['name' => $ip[10], 'value' => 0],
+            ['name' => $ip[11], 'value' => 0],
+            ['name' => $ip[12], 'value' => 0],
+            ['name' => $ip[13], 'value' => 0],
+            ['name' => $ip[14], 'value' => 0],
+        ];
+
+        return response()->json($jawaban);
     }
 
     // public function pencapaian(){
