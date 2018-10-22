@@ -27,7 +27,7 @@ class IndikatorPencapaian {
       $this->dip      = $dip;
       $this->rumus    = $rumus;
       $this->jawaban  = $jawaban;
-      $this->sekolah  = $sekolah::kondisi()->get();
+      // $this->sekolah  = $sekolah::kondisi()->get();
   }
 
   public function duaSatu ($pilihan = null){

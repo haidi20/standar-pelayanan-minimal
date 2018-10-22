@@ -4,7 +4,8 @@
     <meta charset="utf-8">
     <meta name="csrf-token">
     <title>Standar Pelayanan Minimal</title>
-    <link rel="stylesheet" href="{{mix('css/app.css')}}">
+    @include('_layouts.script-top')
+    @yield('script-top')
   </head>
   <body>
     <div id="app">
@@ -15,6 +16,7 @@
         csrfToken: '{{ csrf_token() }}'
       }
     </script>
-    <script src="{{mix('js/app.js')}}"></script>
+    @include('_layouts.script-bottom')
+    @yield('script-bottom')
   </body>
 </html>

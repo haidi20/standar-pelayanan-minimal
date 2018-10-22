@@ -1,5 +1,54 @@
 @extends('_layouts.default')
+@section('script-bottom')
+  <script>
+    function kirim(){
+      $.ajax({
+        url: '{{ route('dashboard.persen') }}?sekolah=',
+        type: 'GET',
+        cache: false,
+        beforeSend:function(){
+          $('#proses').modal('show');
+          // console.log('sedang berjalan');
+        },
+        complete:function(){
+         $('#proses').modal('hide');
+         // console.log('selesai');
+        },
+        success:function(data){   
+          // console.log(data);
+          manageData(data);
+        },
+        error:function(xhr, ajaxOptions, thrownError){
+          if(thrownError === 'Unauthorized'){
+            window.location.href = '{{ url('logout') }}';
+          }
+        }
+      });
+    }
 
+    function manageData(data){
+      var rows = '';
+
+      // console.log(data);
+
+      $.each(data, function(index, item){
+        rows += '<tr>'+
+                      '<td class="pl-1 pr-1">'+manage_row(index)+'</td>'+
+                      '<td class="pl-1 pr-1"></td>'+
+                      '<td class="pl-1 pr-1"></td>'+
+                    '</tr>';
+        // console.log(item);
+      });
+
+      $('#tablePersen').html(rows);
+    }
+
+    function manage_row(index)
+    {
+        return index + 1;
+    }
+  </script>
+@endsection
 @section('konten')
   <div class="container">
     <div class="row">
@@ -20,6 +69,7 @@
       </div>
     </div>
     <br>
-    <dashboard></dashboard>
+    @include('dashboard.table')
+    @include('dashboard.modal')
   </div>
 @endsection

@@ -15,6 +15,6 @@ class Jawaban extends Model
 
     public function scopeKondisiJawaban($query,$pertanyaan,$sekolah){
         return $query->where('pertanyaan_id',$pertanyaan)
-              ->where('sekolah_id',$sekolah);
+              		 ->where('sekolah_id',$sekolah);
     }
 }

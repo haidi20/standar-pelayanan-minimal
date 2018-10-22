@@ -12,7 +12,7 @@ if ( ! function_exists('kondisi_tulisan_error') )
 if ( ! function_exists('kondisi_error') )
 {
     function kondisi_error($errors, $key){
-      return $errors->has($key) ? 'error':'';
+      return $errors->has($key) ? 'error':'' ;
     }
 }
 
