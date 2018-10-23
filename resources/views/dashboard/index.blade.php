@@ -2,9 +2,9 @@
 @section('script-bottom')
   <script>
 
-    function kondisi(id, pilihan){
+    function kondisi(){
       var filter = $('#filter').serialize();
-      
+
       $.ajax({
         url: '{{ url('sekolah/vue') }}',
         type: 'GET',
