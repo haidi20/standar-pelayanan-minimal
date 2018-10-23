@@ -245,7 +245,7 @@ class IndikatorPencapaian {
       foreach ($this->sekolah as $index => $item) {
           for ($i=1; $i <= 6 ; $i++) {
               $id = $i + 57 ;
-              $data[$item->id][$i]      = $this->jawaban->kondisiJawaban($id,$item->id)->value('isi');
+              $data[$item->id][$i]      = $this->jawaban->kondisiJawaban($id,$item->id)->value('isi');  
           }
           $nama[$index] = ['nama'=>$item->nama];
       }

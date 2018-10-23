@@ -126,8 +126,28 @@ class DashboardController extends Controller
 
             return kondisi_jumlah_data($this->rumus->limaBelas($data));
         }else{
-            return $nilai;
+            return kondisi_jumlah_data($nilai);
         }
+    }
+
+    public function IPTujuhBelas($nilai, $kondisi)
+    {
+        if($kondisi == 'looping'){
+            for($i = 0; $i <= 5; $i++){
+                $jawBanyak = $i + 57;
+
+                $data[$nilai][$i]   = $this->jawaban->kondisiJawaban($jawBanyak,$nilai)->value('isi');
+            }
+
+            return kondisi_jumlah_data($this->rumus->tujuhBelas($data));
+        }else{
+            return kondisi_jumlah_data($nilai);
+        }
+    }
+
+    public function IPDelapanBelas($nilai, $kondisi)
+    {
+        
     }
 
     public function persen()
@@ -145,9 +165,9 @@ class DashboardController extends Controller
             $tujuhDua[$item->id]    = $this->IPEmpatLimaTujuh($item->id, 'looping', 2, 15);
             $sepuluh[$item->id]     = $this->IPSepuluh($item->id, 'looping', 16, 17);
             $empatBelas[$item->id]  = $this->IPSepuluh($item->id, 'looping', 18, 19);
-            
+            $limaBelas[$item->id]   = $this->IPLimaBelas($item->id, 'looping');
+            $tujuhBelas[$item->id]  = $this->IPTujuhBelas($item->id, 'looping');   
         }
-        $limaBelas   = $this->IPLimaBelas($item->id, 'looping');
 
         $jawaban = [
             ['name' => $ip[0], 'value' => $this->IPDua($duaSatu, 'hasil')],
@@ -160,7 +180,7 @@ class DashboardController extends Controller
             ['name' => $ip[7], 'value' => $this->IPSepuluh($sepuluh, 'hasil')],
             ['name' => $ip[8], 'value' => $this->IPEmpatBelas($empatBelas, 'hasil')],
             ['name' => $ip[9], 'value' => $this->IPLimaBelas($limaBelas, 'hasil')],
-            ['name' => $ip[10], 'value' => 0],
+            ['name' => $ip[10], 'value' => $this->IPTujuhBelas($tujuhBelas, 'hasil')],
             ['name' => $ip[11], 'value' => 0],
             ['name' => $ip[12], 'value' => 0],
             ['name' => $ip[13], 'value' => 0],
