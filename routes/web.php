@@ -27,17 +27,12 @@ Route::get('dashboard/persen','DashboardController@persen')->name('dashboard.per
 Route::get('dashboard/pencapaian/vue','DashboardController@pencapaian');
 
 //kebutuhan vue
-// Sekolah
 Route::get('sekolah/vue','SekolahController@baca');
-// kecamatan
 Route::get('kecamatan/vue','KecamatanController@index');
-// pendidikan
 Route::get('pendidikan/vue','PendidikanController@index');
 
 // resource :
-// sekolah
 Route::resource('sekolah','SekolahController');
-// pengguna
 Route::resource('pengguna','PenggunaController');
 
 //import dari excel

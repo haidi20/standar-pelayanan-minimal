@@ -1,14 +1,43 @@
 @extends('_layouts.default')
 @section('script-bottom')
   <script>
+
+    function kondisi(id, pilihan){
+      var filter = $('#filter').serialize();
+      
+      $.ajax({
+        url: '{{ url('sekolah/vue') }}',
+        type: 'GET',
+        cache: false,
+        data: filter,
+        beforeSend:function(){
+          // $('#proses').modal('show');
+          // console.log('sedang berjalan');
+        },
+        complete:function(){
+         // $('#proses').modal('hide');
+         // console.log('selesai');
+        },
+        success:function(data){   
+          // console.log(data);
+          manageDataDropdownSekolah(data);
+        },
+        error:function(xhr, ajaxOptions, thrownError){
+          if(thrownError === 'Unauthorized'){
+            window.location.href = '{{ url('logout') }}';
+          }
+        }
+      });
+    }
+    
     function kirim(){
       var tahun       = $('#tahun').val();
+      var periode     = $('#periode').val();
       var sekolah     = $('#sekolah').val();
       var kecamatan   = $('#kecamatan').val();
       var pendidikan  = $('#pendidikan').val();
 
-
-      var urlParameter = '?sekolah='+sekolah+'&kecamatan='+kecamatan+'&pendidikan='+pendidikan+'&tahun='+tahun;
+      var urlParameter = '?sekolah='+sekolah+'&kecamatan='+kecamatan+'&pendidikan='+pendidikan+'&tahun='+tahun+'&periode='+periode;
 
       $.ajax({
         url: '{{ url('dashboard/persen') }}'+urlParameter,
@@ -24,7 +53,7 @@
         },
         success:function(data){   
           // console.log(data);
-          manageData(data);
+          manageDataTablePersen(data);
         },
         error:function(xhr, ajaxOptions, thrownError){
           if(thrownError === 'Unauthorized'){
@@ -34,21 +63,29 @@
       });
     }
 
-    function manageData(data){
+    function manageDataTablePersen(data){
       var rows = '';
-
       // console.log(data);
-
       $.each(data, function(index, item){
         rows += '<tr>'+
-                      '<td >'+manage_row(index)+'</td>'+
-                      '<td align="center">'+item.name+'</td>'+
-                      '<td align="center">'+item.value+' %</td>'+
-                    '</tr>';
-        // console.log(item);
+                  '<td >'+manage_row(index)+'</td>'+
+                  '<td align="center">'+item.name+'</td>'+
+                  '<td align="center">'+item.value+' %</td>'+
+                '</tr>';
       });
 
       $('#tablePersen').html(rows);
+    }
+
+    function manageDataDropdownSekolah(data){
+      var rows = '';
+
+      rows += '<option value="">Semua Sekolah</option>';
+      $.each(data, function(index, item){
+        rows += '<option value="'+item.id+'">'+item.nama+'</option>';
+      });
+
+      $('#sekolah').html(rows);
     }
 
     function manage_row(index)

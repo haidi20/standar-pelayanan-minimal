@@ -1,12 +1,11 @@
 <div class="row">
-    {!! Form::open(['class' => 'form form-horizontal', 'id' => 'form-pr']) !!}
+    {!! Form::open(['class' => 'form form-horizontal', 'id' => 'filter']) !!}
       <div class="col-md-4">
       <div class="row">
         <div class="col-md-12">
           <div class="form-group">
             <label for="tahun" class="form-label">Tahun</label>
             <select name="tahun" id="tahun" class="form-control">
-              <option value="">Pilih Tahun</option>
               @foreach($tahun as $index => $item)
                 <option value="{{ $item }}" {{ request('tahun') == $item ? 'selected' : '' }}>{{ $item }}</option>
               @endforeach
@@ -30,10 +29,10 @@
         <div class="col-md-12">
           <div class="form-group">
             <label for="pendidikan" class="form-label">Jenjang Pendidikan</label>
-            <select name="pendidikan" id="pendidikan" class="form-control">
+            <select name="pendidikan" id="pendidikan" class="form-control" onChange="kondisi()">
               <option value="">Semua Jenjang Pendidikan</option>
               @foreach($pendidikan as $index => $item)
-                <option value="{{ $item->id }}" {{request('pendidikan') == $item->id ? 'selected' : ''}}>{{ $item->nama }}</option>
+                <option value="{{ $item->id }}" {{request('pendidikan') == $item->id ? 'selected' : ''}} >{{ $item->nama }}</option>
               @endforeach
             </select>
           </div>
@@ -43,7 +42,7 @@
         <div class="col-md-12">
           <div class="form-group">
             <label for="kecamatan" class="form-label">Kecamatan</label>
-            <select name="kecamatan" id="kecamatan" class="form-control">
+            <select name="kecamatan" id="kecamatan" class="form-control" onChange="kondisi()">
               <option value="">Kota Samarinda</option>
                @foreach($kecamatan as $index => $item)
                   <option value="{{ $item->id }}" {{request('kecamatan') == $item->id ? 'selected' : ''}}>{{ $item->nama }}</option>
