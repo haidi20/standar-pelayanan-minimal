@@ -332,7 +332,7 @@ class IndikatorPencapaian {
 
   public function duaPuluhSatu($pilihan = null){
 
-      foreach ($this->sekolah as $index => $item) {
+      foreach ($this->sekolah as $index => $item){
           $jawSatu[$item->id]           = kondisi_null($this->jawaban->kondisiJawaban(78,$item->id)->value('isi'));
 
           $rumus[$item->id]             = number_format($this->rumus->duaPuluhSatu($jawSatu[$item->id]));

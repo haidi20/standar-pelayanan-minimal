@@ -5,14 +5,14 @@
 if ( ! function_exists('kondisi_tulisan_error') )
 {
     function kondisi_tulisan_error($errors, $key){
-        return $errors->first($key) ;
+        return $errors->first($key);
     }
 }
 
 if ( ! function_exists('kondisi_error') )
 {
     function kondisi_error($errors, $key){
-      return $errors->has($key) ? 'error':'' ;
+      return $errors->has($key) ? 'error':'';
     }
 }
 

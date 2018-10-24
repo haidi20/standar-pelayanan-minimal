@@ -7,7 +7,8 @@ class Rumus
   // fungsi kondisi_sekolah ada di helpers.php
 
   // untuk IP 2
-  public function dua($jawSatu,$jawDua){
+  public function dua($jawSatu,$jawDua)
+  {
       if ($jawSatu != 0 && $jawDua != 0) {
           $rumus = ($jawDua / $jawSatu) * 100 ;
       }else{
@@ -30,7 +31,8 @@ class Rumus
       return kondisi_sekolah($rumus);
   }
 
-  public function sepuluh($jawSatu,$jawDua){
+  public function sepuluh($jawSatu,$jawDua)
+  {
       if ($jawSatu == 1 && $jawDua == 1) {
           $rumus = 100;
       }else{
@@ -120,7 +122,8 @@ class Rumus
       }
   }
 
-  public function delapanBelas($jawSatu, $jawDua){
+  public function delapanBelas($jawSatu, $jawDua)
+  {
       if ($jawSatu >= 100 && $jawDua >= 10) {
           $rumus = 100;
       }else{
@@ -130,7 +133,8 @@ class Rumus
       return kondisi_sekolah($rumus);
   }
 
-  public function sembilanBelas($jawSatu, $jawDua){
+  public function sembilanBelas($jawSatu, $jawDua)
+  {
       if ($jawSatu != 0 && $jawDua != 0) {
           if ($jawSatu == $jawDua) {
               $rumus = 100;
@@ -147,7 +151,7 @@ class Rumus
   public function duaPuluh($data){
       foreach ($data as $index => $item) {
           if ($data[$index][1] >= 18 && $data[$index][2] >= 18 && $data[$index][3] >= 24 &&
-              $data[$index][4] >= 27 && $data[$index][5] >= 27 && $data[$index][6] >= 27) {
+              $data[$index][4] >= 27 && $data[$index][5] >= 27 && $data[$index][6] >= 27){
               $rumus[$index] = 100;
           }else{
               $rumus[$index] = 0;
@@ -156,11 +160,11 @@ class Rumus
           $hasil[$index] = kondisi_sekolah($rumus[$index]);
       }
 
-      return $hasil;
+      return $data;
   }
 
   public function duaPuluhSatu($jawSatu){
-      $rumus = $jawSatu == 1 ?1:0;
+      $rumus = $jawSatu == 1 ? 1 : 0;
 
       return kondisi_sekolah($rumus);
   }

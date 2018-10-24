@@ -134,7 +134,7 @@ class DashboardController extends Controller
     {
         if($kondisi == 'looping'){
             for($i = 0; $i <= 5; $i++){
-                $jawBanyak = $i + 57;
+                $jawBanyak = $i + 58;
 
                 $data[$nilai][$i]   = $this->jawaban->kondisiJawaban($jawBanyak,$nilai)->value('isi');
             }
@@ -145,9 +145,60 @@ class DashboardController extends Controller
         }
     }
 
-    public function IPDelapanBelas($nilai, $kondisi)
+    public function IPDelapanBelas($nilai, $kondisi, $jawSatu = null, $jawDua = null)
     {
-        
+        if($kondisi == 'looping'){
+            $jawSatu  = kondisi_null($this->jawaban->kondisiJawaban($jawSatu, $nilai)->value('isi'));
+            $jawDua   = kondisi_null($this->jawaban->kondisiJawaban($jawDua, $nilai)->value('isi'));
+
+            $jawaban  = number_format($this->rumus->DelapanBelas($jawSatu,$jawDua));
+            return $jawaban;
+        }elseif($kondisi == 'hasil'){
+            $jawaban      = kondisi_jumlah_data($nilai);
+            return $jawaban;
+        }
+    }
+
+    public function IPSembilanBelas($nilai, $kondisi, $jawSatu = null, $jawDua = null)
+    {
+        if($kondisi == 'looping'){
+            $jawSatu  = kondisi_null($this->jawaban->kondisiJawaban($jawSatu, $nilai)->value('isi'));
+            $jawDua   = kondisi_null($this->jawaban->kondisiJawaban($jawDua, $nilai)->value('isi'));
+
+            $jawaban  = number_format($this->rumus->SembilanBelas($jawSatu,$jawDua));
+            return $jawaban;
+        }elseif($kondisi == 'hasil'){
+            $jawaban      = kondisi_jumlah_data($nilai);
+            return $jawaban;
+        }
+    }
+
+    public function IPDuaPuluh($nilai, $kondisi)
+    {
+        if($kondisi == 'looping'){
+            for($i = 0; $i <= 5; $i++){
+                $jawBanyak = $i + 72;
+
+                $data[$nilai][$i]   = $this->jawaban->kondisiJawaban($jawBanyak,$nilai)->value('isi');
+            }
+
+            return kondisi_jumlah_data($this->rumus->duaPuluh($data));
+        }else{
+            return kondisi_jumlah_data($nilai);
+        }
+    }
+
+    public function IPDuaPuluhSatu($nilai, $kondisi, $jawSatu = null)
+    {
+        if($kondisi == 'looping'){
+            $jawSatu  = kondisi_null($this->jawaban->kondisiJawaban($jawSatu, $nilai)->value('isi'));
+
+            $jawaban  = number_format($this->rumus->duaPuluhSatu($jawSatu));
+            return $jawaban;
+        }elseif($kondisi == 'hasil'){
+            $jawaban      = kondisi_jumlah_data($nilai);
+            return $jawaban;
+        }
     }
 
     public function persen()
@@ -156,17 +207,21 @@ class DashboardController extends Controller
         $sekolah    = $this->sekolah->kondisi()->get();
 
         foreach ($sekolah as $index => $item) {
-            $duaSatu[$item->id]     = $this->IPDua($item->id, 'looping', 2, 3);
-            $duaDua[$item->id]      = $this->IPDua($item->id, 'looping', 9, 10);
-            $empat[$item->id]       = $this->IPEmpatLimaTujuh($item->id, 'looping', 1, 11);
-            $limaSatu[$item->id]    = $this->IPEmpatLimaTujuh($item->id, 'looping', 1, 12);
-            $limaDua[$item->id]     = $this->IPEmpatLimaTujuh($item->id, 'looping', 6, 13);
-            $tujuhSatu[$item->id]   = $this->IPEmpatLimaTujuh($item->id, 'looping', 2, 14);
-            $tujuhDua[$item->id]    = $this->IPEmpatLimaTujuh($item->id, 'looping', 2, 15);
-            $sepuluh[$item->id]     = $this->IPSepuluh($item->id, 'looping', 16, 17);
-            $empatBelas[$item->id]  = $this->IPSepuluh($item->id, 'looping', 18, 19);
-            $limaBelas[$item->id]   = $this->IPLimaBelas($item->id, 'looping');
-            $tujuhBelas[$item->id]  = $this->IPTujuhBelas($item->id, 'looping');   
+            $duaSatu[$item->id]         = $this->IPDua($item->id, 'looping', 2, 3);
+            $duaDua[$item->id]          = $this->IPDua($item->id, 'looping', 9, 10);
+            $empat[$item->id]           = $this->IPEmpatLimaTujuh($item->id, 'looping', 1, 11);
+            $limaSatu[$item->id]        = $this->IPEmpatLimaTujuh($item->id, 'looping', 1, 12);
+            $limaDua[$item->id]         = $this->IPEmpatLimaTujuh($item->id, 'looping', 6, 13);
+            $tujuhSatu[$item->id]       = $this->IPEmpatLimaTujuh($item->id, 'looping', 2, 14);
+            $tujuhDua[$item->id]        = $this->IPEmpatLimaTujuh($item->id, 'looping', 2, 15);
+            $sepuluh[$item->id]         = $this->IPSepuluh($item->id, 'looping', 16, 17);
+            $empatBelas[$item->id]      = $this->IPSepuluh($item->id, 'looping', 18, 19);
+            $limaBelas[$item->id]       = $this->IPLimaBelas($item->id, 'looping');
+            $tujuhBelas[$item->id]      = $this->IPTujuhBelas($item->id, 'looping');
+            $delapanBelas[$item->id]    = $this->IPDelapanBelas($item->id, 'looping');
+            $sembilanBelas[$item->id]   = $this->IPSembilanBelas($item->id, 'looping');
+            $duaPuluh[$item->id]        = $this->IPDuaPuluh($item->id, 'looping');
+            $duaPuluhSatu[$item->id]    = $this->IPDuaPuluhSatu($item->id, 'looping', 78); 
         }
 
         $jawaban = [
@@ -181,10 +236,10 @@ class DashboardController extends Controller
             ['name' => $ip[8], 'value' => $this->IPEmpatBelas($empatBelas, 'hasil')],
             ['name' => $ip[9], 'value' => $this->IPLimaBelas($limaBelas, 'hasil')],
             ['name' => $ip[10], 'value' => $this->IPTujuhBelas($tujuhBelas, 'hasil')],
-            ['name' => $ip[11], 'value' => 0],
-            ['name' => $ip[12], 'value' => 0],
-            ['name' => $ip[13], 'value' => 0],
-            ['name' => $ip[14], 'value' => 0],
+            ['name' => $ip[11], 'value' => $this->IPDelapanBelas($delapanBelas, 'hasil')],
+            ['name' => $ip[12], 'value' => $this->IPSembilanBelas($sembilanBelas, 'hasil')],
+            ['name' => $ip[13], 'value' => $this->IPDuaPuluh($duaPuluh, 'hasil')],
+            ['name' => $ip[14], 'value' => $this->IPDuaPuluhSatu($duaPuluhSatu, 'hasil')],
         ];
 
         return response()->json($jawaban);
