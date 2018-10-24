@@ -180,7 +180,7 @@ return [
 
         /* New Package */
         Maatwebsite\Excel\ExcelServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
+        // Barryvdh\Debugbar\ServiceProvider::class,
 
     ],
 
@@ -233,7 +233,7 @@ return [
         'Sentry' => Sentry\SentryLaravel\SentryFacade::class,
         /* New Package */
         'Excel' => Maatwebsite\Excel\Facades\Excel::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
+        // 'Debugbar' => Barryvdh\Debugbar\Facade::class,
     ],
 
 ];
