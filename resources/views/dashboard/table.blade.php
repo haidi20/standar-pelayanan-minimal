@@ -55,7 +55,7 @@
         <div class="col-md-12">
           <div class="form-group">
             <label for="sekolah" class="form-label">Sekolah</label>
-            <select name="sekolah" id="sekolah" class="form-control">
+            <select id="sekolah" class="form-control">
               <option value="">Semua Sekolah</option>
               @foreach($sekolah as $index => $item)
                 <option value="{{ $item->id }}" {{request('sekolah') == $item->id ? 'selected' : ''}}>{{ $item->nama }}</option>
