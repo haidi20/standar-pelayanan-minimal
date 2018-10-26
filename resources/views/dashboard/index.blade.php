@@ -1,7 +1,8 @@
 @extends('_layouts.default')
 @section('script-bottom')
 <script>
-function kondisi(){
+function kondisi()
+{
   var filter = $('#filter').serialize();
   // console.log(filter)
   $.ajax({
@@ -29,7 +30,8 @@ function kondisi(){
   });
 }
 
-function kirim(){
+function kirim()
+{
   var tahun       = $('#tahun').val();
   var periode     = $('#periode').val();
   var sekolah     = $('#sekolah').val();
@@ -62,7 +64,8 @@ function kirim(){
   });
 }
 
-function manageDataTablePersen(data){
+function manageDataTablePersen(data)
+{
   var rows = '';
   // console.log(data);
   $.each(data, function(index, item){
@@ -76,7 +79,8 @@ function manageDataTablePersen(data){
   $('#tablePersen').html(rows);
 }
 
-function manageDataDropdownSekolah(data){
+function manageDataDropdownSekolah(data)
+{
   var rows = '';
 
   rows += '<option value="">Semua Sekolah</option>';

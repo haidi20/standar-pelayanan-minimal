@@ -17,7 +17,7 @@ Vue.use(VueSession)
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-require('./komponent');
+// require('./komponent');
 
 const app = new Vue({
     el: '#app',
