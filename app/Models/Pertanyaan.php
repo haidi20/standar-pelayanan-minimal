@@ -9,7 +9,14 @@ class Pertanyaan extends Model
     protected $table = 'pertanyaan';
 
     public function jawaban(){
-        return $this->hasMany('App\Models\Jawaban');
+        return $this->hasOne('App\Models\Jawaban', 'pertanyaan_id');
+    }
+
+    public function getJawabanKunciAttribute()
+    {
+        if($this->jawaban){
+            return $this->jawaban->id;
+        }
     }
 
     // scope

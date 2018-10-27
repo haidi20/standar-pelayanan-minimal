@@ -1,32 +1,73 @@
 @extends('_layouts.default')
 @section('script-bottom')
-<script>
+<script>  
   $(function(){
     var href = $('#paginate ul li a');
     href.each(function(){
-      var changeHref = $(this).attr('href') + '&tab=1';
-      // console.log($(this).attr('href', changeHref));
+      no = $(this).html()
+      // console.log(no)
+      $(this).attr('href', '#')
+      $(this).attr('onClick', 'changePaginate('+no+')')
     });
+    
+    // if(sekolah){
+    //   $('#oke').removeAttr('disabled')
+    // }
   });
 
-  function filter()
+  function changePaginate(id)
   {
-    var filter = $('#filter').serialize();
+    var kecamatan     = $('#kecamatan').val();
+    var pendidikan    = $('#pendidikan').val();
+    var sekolah       = $('#sekolah').val();
+    var urlParameter  = '?sekolah='+sekolah+'&kecamatan='+kecamatan+'&pendidikan='+pendidikan+'&page='+id;
+    
+    console.log(id)
+    $('input[name="isi[]"]').map(function(){
+      var pertanyaan  = $(this).attr('data-pertanyaan')
+      var nilai       = this.value
+      var sekolah     = $(this).attr('data-sekolah')
 
-    console.log(filter);
+      // console.log('id = ' + id + ' nilai = '+nilai + ' pertanyaan = '+pertanyaan+ ' sekolah = '+ sekolah );
+
+      $.ajax({
+        url: '{{ url('kuisioner/store') }}',
+        type: 'GET',
+        cache: false,
+        data: {nilai:nilai, pertanyaan:pertanyaan, sekolah:sekolah},
+        beforeSend:function(){
+          // $('#proses').modal('show');
+          // console.log('sedang berjalan');
+        },
+        complete:function(){
+         // $('#proses').modal('hide');
+         // console.log('selesai');
+        },
+        success:function(data){   
+          // console.log(data);          
+          // manageDataDropdownSekolah(data);
+          window.location.href='{{url($baseUrl)}}'+urlParameter;
+        },
+        error:function(xhr, ajaxOptions, thrownError){
+          window.location.href='{{url($baseUrl)}}'+urlParameter;
+          if(thrownError === 'Unauthorized'){
+
+          }
+        }
+      });
+    }).get();
   }
 
   function kondisi()
   {
     var kecamatan   = $('#kecamatan').val();
     var pendidikan  = $('#pendidikan').val();
-
     if(kecamatan && pendidikan){
       $.ajax({
         url: '{{ url('sekolah/vue') }}',
         type: 'GET',
         cache: false,
-        data: filter,
+        data: {kecamatan:kecamatan, pendidikan:pendidikan},
         beforeSend:function(){
           // $('#proses').modal('show');
           // console.log('sedang berjalan');
@@ -41,7 +82,7 @@
         },
         error:function(xhr, ajaxOptions, thrownError){
           if(thrownError === 'Unauthorized'){
-            window.location.href = '{{ url('logout') }}';
+
           }
         }
       });
@@ -69,7 +110,8 @@
   }
 
   function changeSekolah(){
-    var sekolah = $('#sekolah').val()
+    var sekolah = $('#sekolah').val();
+
     if(sekolah){
       $('#oke').prop('disabled', false)
     }else{

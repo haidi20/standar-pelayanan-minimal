@@ -23,7 +23,7 @@ class Sekolah extends Model
         }));
     }
 
-    public function scopeKondisi($query){
+    public function scopeKondisi($query, $kondisi = null){
       if (request('kuisioner')) {
         $query->where('kecamatan_id',request('kecamatan'))
               ->where('pendidikan_id',request('pendidikan'));
@@ -35,7 +35,9 @@ class Sekolah extends Model
           $query->where('kecamatan_id',request('kecamatan'));
         }
         if (request('sekolah')) {
-          $query->where('id',request('sekolah'));
+          if($kondisi == null){
+            $query->where('id',request('sekolah'));
+          }
         }
       }
     }

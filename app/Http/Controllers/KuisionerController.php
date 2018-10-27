@@ -12,6 +12,7 @@ use App\Models\Kecamatan;
 use App\Models\Pendidikan;
 
 use Carbon\Carbon;
+use Session;
 
 class KuisionerController extends Controller
 {
@@ -33,9 +34,22 @@ class KuisionerController extends Controller
     {
         $kecamatan  = $this->kecamatan->get();
         $pendidikan = $this->pendidikan->get();
-        $pertanyaan = $this->pertanyaan->kondisi()->paginate();
+        $jawaban    = $this->jawaban;
+        $pertanyaan = $this->pertanyaan;
+        $baseUrl    = 'kuisioner';
+        $sekolah    = [];
+        $isi        = [];
+        if(request('sekolah')){
+            $sekolah = $this->sekolah->kondisi('kuisioner')->get();
+        }
 
-        return view('kuisioner.index',compact('pertanyaan', 'kecamatan', 'pendidikan'));
+        foreach ($pertanyaan->get() as $index => $item) {
+            $isi[$item->id] = $jawaban->kondisiJawaban($item->id, request('sekolah'))->value('isi');
+        }
+
+        $pertanyaan = $pertanyaan->kondisi()->paginate(10);
+
+        return view('kuisioner.index',compact('pertanyaan', 'kecamatan', 'pendidikan', 'sekolah', 'isi', 'baseUrl'));
     }
 
     public function info()
@@ -46,38 +60,31 @@ class KuisionerController extends Controller
         return $info;
     }
 
-    public function pertanyaan()
-    {
-        $pertanyaan = Pertanyaan::kondisi()
-                                ->with('jawaban')
-                                ->paginate(10);
-
-        return $pertanyaan ;
-    }
-
-    public function jawaban()
-    {
-        $jawaban = pertanyaan::kondisiJawaban()
-                             ->get();
-        return $jawaban;
-    }
-
     public function store()
     {
-        $nampung = [];
-        $jawaban = request()->input('jawaban');
+        $nilai          = request('nilai');
+        $pertanyaan_id  = request('pertanyaan');
+        $sekolah_id     = request('sekolah');
+        $jawaban        = $this->jawaban->updateOrCreate(compact('sekolah_id', 'pertanyaan_id'));
+        $jawaban->isi   = $nilai;
+        $jawaban->created_at = Carbon::now();
+        $jawaban->save();
+        return $jawaban;
 
-        foreach ($jawaban as $index => $item) {
-            // $nampung[$index] = 'isi = '.$item['isi']. ' pertanyaan = '. $item['pertanyaan'];
-            $pertanyaan_id                  = $item['pertanyaan'];
-            $sekolah_id                     = $item['sekolah'];
-            $isi                            = $item['isi'];
+        // $jawaban->pertanyaan_id = $pertanyaan;  
+        // $jawaban->sekolah_id    = $sekolah;
+        // $
+        // foreach ($jawaban as $index => $item) {
+        //     // $nampung[$index] = 'isi = '.$item['isi']. ' pertanyaan = '. $item['pertanyaan'];
+        //     $pertanyaan_id                  = $item['pertanyaan'];
+        //     $sekolah_id                     = $item['sekolah'];
+        //     $isi                            = $item['isi'];
             
-            $inputJawaban                   = Jawaban::updateOrCreate(compact('sekolah_id', 'pertanyaan_id'));
-            $inputJawaban->isi              = $item['isi'];
-            $inputJawaban->created_at       = Carbon::now();
-            $inputJawaban->save();
-        }
+        //     $inputJawaban                   = Jawaban::updateOrCreate(compact('sekolah_id', 'pertanyaan_id'));
+        //     $inputJawaban->isi              = $item['isi'];
+        //     $inputJawaban->created_at       = Carbon::now();
+        //     $inputJawaban->save();
+        // }
         // return $nampung;
     }
 }
