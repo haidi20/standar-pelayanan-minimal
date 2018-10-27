@@ -18,7 +18,7 @@
               <th>Isi</th>
             </tr>
           </thead>
-          	<tbody>
+          	<tbody id="tableSatu">
             @foreach($pertanyaanSatu as $index => $item)
       				<tr>
       					<td class="no">{{ table_row_number($pertanyaanSatu, $index) }}</td>

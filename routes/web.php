@@ -13,6 +13,7 @@ Route::get('pengguna/konfirmasi','PenggunaController@konfirmasi')->name('penggun
 Route::get('kuisioner','KuisionerController@index')->name('kuisioner.index');
 Route::get('kuisioner/store','KuisionerController@store');
 Route::get('kuisioner/info','KuisionerController@info');
+Route::get('kuisioner/table-satu/{kondisi}', 'KuisionerController@tableSatu');
 
 // kunci
 Route::get('kunci','KunciController@index')->name('kunci.index');

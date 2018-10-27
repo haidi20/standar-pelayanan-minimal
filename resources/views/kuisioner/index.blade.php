@@ -18,7 +18,29 @@
       $('#dua').addClass('active')
       $('#linkDua').addClass('active')
     }
+
+    var page = {{ request('page') ? request('page') : 0 }}
+    if(page > 2){
+      changeTableSatu(page)
+    }
   });
+
+  function changeTableSatu(page)
+  {
+    $.ajax({
+        url: '{{ url('kuisioner/table-satu/pertanyaan') }}',
+        type: 'GET',  
+        cache: false,
+        success:function(data){          
+          manageDataTableSatu(data);
+        },
+        error:function(xhr, ajaxOptions, thrownError){
+          if(thrownError === 'Unauthorized'){
+
+          }
+        }
+      });
+  }
 
   function changePaginate(id, tab = null)
   {
@@ -40,14 +62,6 @@
         type: 'GET',
         cache: false,
         data: {nilai:nilai, pertanyaan:pertanyaan, sekolah:sekolah},
-        beforeSend:function(){
-          // $('#proses').modal('show');
-          // console.log('sedang berjalan');
-        },
-        complete:function(){
-         // $('#proses').modal('hide');
-         // console.log('selesai');
-        },
         success:function(data){   
           // console.log(data);          
           // manageDataDropdownSekolah(data);
@@ -73,14 +87,6 @@
         type: 'GET',
         cache: false,
         data: {kecamatan:kecamatan, pendidikan:pendidikan},
-        beforeSend:function(){
-          // $('#proses').modal('show');
-          // console.log('sedang berjalan');
-        },
-        complete:function(){
-         // $('#proses').modal('hide');
-         // console.log('selesai');
-        },
         success:function(data){   
           // console.log(data);
           manageDataDropdownSekolah(data);
@@ -114,6 +120,40 @@
     $('#sekolah').html(rows);
   }
 
+  function manageDataTableSatu(data)
+  {
+    var rows = '';
+
+    $.each(data, function(index, item){
+      rows += '<tr>'+
+                '<td>'+manage_row(index)+'</td>'+
+                '<td>'+item.keterangan+'</td>'+
+                '<td> <input type="text" id="pertanyaan_'+item.id+'" class="form-control form"'+
+                     'data-pertanyaan="'+item.id+'" data-sekolah="{{ request('sekolah') }}"'+
+                     'name="isi[]" value=""></td>'+
+              '</tr>';
+              fetchIsi(item.id)
+    });
+
+    $('#tableSatu').html(rows);
+  }
+
+  function fetchIsi(pertanyaan)
+  {
+    var sekolah = {{request('sekolah') ? request('sekolah') : 0}} ;
+    var isi;
+    $.ajax({
+        url: '{{ url('kuisioner/table-satu/jawaban') }}',
+        type: 'GET',  
+        cache: false,
+        data: {pertanyaan:pertanyaan, sekolah:sekolah},
+        success:function(data){
+          isi = data != null ? data : 0 ;
+          $('#pertanyaan_'+pertanyaan).val(isi)
+        },
+      });
+  }
+
   function changeSekolah()
   {
     var sekolah = $('#sekolah').val();
@@ -130,6 +170,11 @@
     var nomor = $.session.set('tab', tab);
     // console.log($.session.get('tab'));
   }
+
+  function manage_row(index)
+{
+    return index + 1;
+}
 </script>
 @endsection
 @section('konten')

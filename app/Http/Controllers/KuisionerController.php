@@ -20,7 +20,8 @@ class KuisionerController extends Controller
                                 Jawaban $jawaban, 
                                 Sekolah $sekolah,
                                 Kecamatan $kecamatan,
-                                Pendidikan $pendidikan
+                                Pendidikan $pendidikan,
+                                Request $request
                             )
     {
         $this->pertanyaan   = $pertanyaan;
@@ -28,6 +29,7 @@ class KuisionerController extends Controller
         $this->sekolah      = $sekolah;
         $this->kecamatan    = $kecamatan;
         $this->pendidikan   = $pendidikan;
+        $this->request      = $request;
     }
 
     public function index()
@@ -39,6 +41,8 @@ class KuisionerController extends Controller
         $baseUrl    = 'kuisioner';
         $sekolah    = [];
         $isi        = [];
+
+        // return $this->request->merge(['page' => 10]);
         if(request('sekolah')){
             $sekolah = $this->sekolah->kondisi('kuisioner')->get();
         }
@@ -51,6 +55,23 @@ class KuisionerController extends Controller
         $pertanyaanDua = $pertanyaan->kondisi(2)->paginate(10);
 
         return view('kuisioner.index',compact('pertanyaanSatu', 'pertanyaanDua', 'kecamatan', 'pendidikan', 'sekolah', 'isi', 'baseUrl'));
+    }
+
+    public function tableSatu($kondisi)
+    {
+         $pertanyaan = $this->pertanyaan;
+
+         // foreach ($pertanyaan->get() as $index => $item) {
+            $jawaban = $this->jawaban->kondisi(request('pertanyaan'), request('sekolah'))->value('isi');
+         // }
+         
+         $pertanyaan = $pertanyaan->kondisi(1)->limit(10)->get();
+
+         if($kondisi == 'pertanyaan'){
+            return $pertanyaan;
+         }else{
+            return $jawaban;
+         }
     }
 
     public function info()
