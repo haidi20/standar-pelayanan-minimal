@@ -15,7 +15,7 @@ class Jawaban extends Model
         return $this->belongsTo('App\Models\Sekolah');
     }
 
-    public function scopeKondisiJawaban($query,$pertanyaan,$sekolah)
+    public function scopeKondisi($query,$pertanyaan,$sekolah)
     {
     	$bulanPeriode	= $this->periodeBulan();
     	$dariPeriode	= $this->periodeTahun($bulanPeriode->dari);

@@ -59,8 +59,8 @@ class DashboardController extends Controller
         $jawaban = '';
 
         if($kondisi == 'looping'){
-            $jawSatu  = kondisi_null($this->jawaban->kondisiJawaban($jawSatu, $nilai)->value('isi'));
-            $jawDua   = kondisi_null($this->jawaban->kondisiJawaban($jawDua, $nilai)->value('isi'));
+            $jawSatu  = kondisi_null($this->jawaban->kondisi($jawSatu, $nilai)->value('isi'));
+            $jawDua   = kondisi_null($this->jawaban->kondisi($jawDua, $nilai)->value('isi'));
 
             $jawaban  = number_format($this->rumus->dua($jawSatu,$jawDua));
             return $jawaban;
@@ -75,7 +75,7 @@ class DashboardController extends Controller
         $jawaban = '';
 
         if($kondisi == 'looping'){
-            $jawSatu  = kondisi_null($this->jawaban->kondisiJawaban($jawSatu, $nilai)->value('isi'));
+            $jawSatu  = kondisi_null($this->jawaban->kondisi($jawSatu, $nilai)->value('isi'));
 
             $jawaban  = number_format($this->rumus->empatLimaTujuh($jawSatu, $batas));
             return $jawaban;
@@ -90,8 +90,8 @@ class DashboardController extends Controller
         $jawaban = '';
 
         if($kondisi == 'looping'){
-            $jawSatu  = kondisi_null($this->jawaban->kondisiJawaban($jawSatu, $nilai)->value('isi'));
-            $jawDua   = kondisi_null($this->jawaban->kondisiJawaban($jawDua, $nilai)->value('isi'));
+            $jawSatu  = kondisi_null($this->jawaban->kondisi($jawSatu, $nilai)->value('isi'));
+            $jawDua   = kondisi_null($this->jawaban->kondisi($jawDua, $nilai)->value('isi'));
 
             $jawaban  = number_format($this->rumus->sepuluh($jawSatu,$jawDua));
             return $jawaban;
@@ -104,8 +104,8 @@ class DashboardController extends Controller
     public function IPEmpatBelas($nilai, $kondisi, $jawSatu = null, $jawDua = null)
     {
         if($kondisi == 'looping'){
-            $jawSatu  = kondisi_null($this->jawaban->kondisiJawaban($jawSatu, $nilai)->value('isi'));
-            $jawDua   = kondisi_null($this->jawaban->kondisiJawaban($jawDua, $nilai)->value('isi'));
+            $jawSatu  = kondisi_null($this->jawaban->kondisi($jawSatu, $nilai)->value('isi'));
+            $jawDua   = kondisi_null($this->jawaban->kondisi($jawDua, $nilai)->value('isi'));
 
             $jawaban  = number_format($this->rumus->empatBelas($jawSatu,$jawDua));
             return $jawaban;
@@ -121,7 +121,7 @@ class DashboardController extends Controller
             for($i = 0; $i <= 29; $i++){
                 $jawBanyak = $i + 27;
 
-                $data[$nilai][$i]   = $this->jawaban->kondisiJawaban($jawBanyak,$nilai)->value('isi');
+                $data[$nilai][$i]   = $this->jawaban->kondisi($jawBanyak,$nilai)->value('isi');
             }
 
             return kondisi_jumlah_data($this->rumus->limaBelas($data));
@@ -136,7 +136,7 @@ class DashboardController extends Controller
             for($i = 0; $i <= 5; $i++){
                 $jawBanyak = $i + 58;
 
-                $data[$nilai][$i]   = $this->jawaban->kondisiJawaban($jawBanyak,$nilai)->value('isi');
+                $data[$nilai][$i]   = $this->jawaban->kondisi($jawBanyak,$nilai)->value('isi');
             }
 
             return kondisi_jumlah_data($this->rumus->tujuhBelas($data));
@@ -148,8 +148,8 @@ class DashboardController extends Controller
     public function IPDelapanBelas($nilai, $kondisi, $jawSatu = null, $jawDua = null)
     {
         if($kondisi == 'looping'){
-            $jawSatu  = kondisi_null($this->jawaban->kondisiJawaban($jawSatu, $nilai)->value('isi'));
-            $jawDua   = kondisi_null($this->jawaban->kondisiJawaban($jawDua, $nilai)->value('isi'));
+            $jawSatu  = kondisi_null($this->jawaban->kondisi($jawSatu, $nilai)->value('isi'));
+            $jawDua   = kondisi_null($this->jawaban->kondisi($jawDua, $nilai)->value('isi'));
 
             $jawaban  = number_format($this->rumus->DelapanBelas($jawSatu,$jawDua));
             return $jawaban;
@@ -162,8 +162,8 @@ class DashboardController extends Controller
     public function IPSembilanBelas($nilai, $kondisi, $jawSatu = null, $jawDua = null)
     {
         if($kondisi == 'looping'){
-            $jawSatu  = kondisi_null($this->jawaban->kondisiJawaban($jawSatu, $nilai)->value('isi'));
-            $jawDua   = kondisi_null($this->jawaban->kondisiJawaban($jawDua, $nilai)->value('isi'));
+            $jawSatu  = kondisi_null($this->jawaban->kondisi($jawSatu, $nilai)->value('isi'));
+            $jawDua   = kondisi_null($this->jawaban->kondisi($jawDua, $nilai)->value('isi'));
 
             $jawaban  = number_format($this->rumus->SembilanBelas($jawSatu,$jawDua));
             return $jawaban;
@@ -179,7 +179,7 @@ class DashboardController extends Controller
             for($i = 0; $i <= 5; $i++){
                 $jawBanyak = $i + 72;
 
-                $data[$nilai][$i]   = $this->jawaban->kondisiJawaban($jawBanyak,$nilai)->value('isi');
+                $data[$nilai][$i]   = $this->jawaban->kondisi($jawBanyak,$nilai)->value('isi');
             }
 
             return kondisi_jumlah_data($this->rumus->duaPuluh($data));
@@ -191,7 +191,7 @@ class DashboardController extends Controller
     public function IPDuaPuluhSatu($nilai, $kondisi, $jawSatu = null)
     {
         if($kondisi == 'looping'){
-            $jawSatu  = kondisi_null($this->jawaban->kondisiJawaban($jawSatu, $nilai)->value('isi'));
+            $jawSatu  = kondisi_null($this->jawaban->kondisi($jawSatu, $nilai)->value('isi'));
 
             $jawaban  = number_format($this->rumus->duaPuluhSatu($jawSatu));
             return $jawaban;

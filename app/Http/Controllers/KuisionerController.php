@@ -44,12 +44,13 @@ class KuisionerController extends Controller
         }
 
         foreach ($pertanyaan->get() as $index => $item) {
-            $isi[$item->id] = $jawaban->kondisiJawaban($item->id, request('sekolah'))->value('isi');
+            $isi[$item->id] = $jawaban->kondisi($item->id, request('sekolah'))->value('isi');
         }
 
-        $pertanyaan = $pertanyaan->kondisi()->paginate(10);
+        $pertanyaanSatu = $pertanyaan->kondisi(1)->paginate(10);
+        $pertanyaanDua = $pertanyaan->kondisi(2)->paginate(10);
 
-        return view('kuisioner.index',compact('pertanyaan', 'kecamatan', 'pendidikan', 'sekolah', 'isi', 'baseUrl'));
+        return view('kuisioner.index',compact('pertanyaanSatu', 'pertanyaanDua', 'kecamatan', 'pendidikan', 'sekolah', 'isi', 'baseUrl'));
     }
 
     public function info()

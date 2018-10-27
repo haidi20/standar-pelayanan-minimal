@@ -20,9 +20,9 @@ class Pertanyaan extends Model
     }
 
     // scope
-    public function scopeKondisi($query){
-        if (request('tab')) {
-            $query->where('penyedia_id',request('tab'));
+    public function scopeKondisi($query, $tab){
+        if ($tab) {
+            $query->where('penyedia_id', $tab);
         }
     }
 

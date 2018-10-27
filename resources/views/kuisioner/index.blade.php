@@ -10,12 +10,17 @@
       $(this).attr('onClick', 'changePaginate('+no+')')
     });
     
-    // if(sekolah){
-    //   $('#oke').removeAttr('disabled')
-    // }
+    var tab = $.session.get('tab')
+    if (tab == 1){
+      $('#satu').addClass('active')
+      $('#linkSatu').addClass('active')
+    }else{
+      $('#dua').addClass('active')
+      $('#linkDua').addClass('active')
+    }
   });
 
-  function changePaginate(id)
+  function changePaginate(id, tab = null)
   {
     var kecamatan     = $('#kecamatan').val();
     var pendidikan    = $('#pendidikan').val();
@@ -109,7 +114,8 @@
     $('#sekolah').html(rows);
   }
 
-  function changeSekolah(){
+  function changeSekolah()
+  {
     var sekolah = $('#sekolah').val();
 
     if(sekolah){
@@ -117,6 +123,12 @@
     }else{
       $('#oke').prop('disabled', true)
     }
+  }
+
+  function changeTab(tab)
+  {
+    var nomor = $.session.set('tab', tab);
+    // console.log($.session.get('tab'));
   }
 </script>
 @endsection
