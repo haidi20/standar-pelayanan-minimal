@@ -33,7 +33,7 @@ class KuisionerController extends Controller
     {
         $kecamatan  = $this->kecamatan->get();
         $pendidikan = $this->pendidikan->get();
-        $pertanyaan = $this->pertanyaan->get();
+        $pertanyaan = $this->pertanyaan->kondisi()->paginate();
 
         return view('kuisioner.index',compact('pertanyaan', 'kecamatan', 'pendidikan'));
     }

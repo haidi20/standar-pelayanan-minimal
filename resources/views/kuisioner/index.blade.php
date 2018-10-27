@@ -1,9 +1,23 @@
 @extends('_layouts.default')
 @section('script-bottom')
 <script>
+  $(function(){
+    var href = $('#paginate ul li a');
+    href.each(function(){
+      var changeHref = $(this).attr('href') + '&tab=1';
+      // console.log($(this).attr('href', changeHref));
+    });
+  });
+
   function filter()
   {
-    var filter      = $('#filter').serialize();
+    var filter = $('#filter').serialize();
+
+    console.log(filter);
+  }
+
+  function kondisi()
+  {
     var kecamatan   = $('#kecamatan').val();
     var pendidikan  = $('#pendidikan').val();
 
@@ -45,11 +59,22 @@
       $.each(data, function(index, item){
         rows += '<option value="'+item.id+'">'+item.nama+'</option>';
       });
+      // $('#oke').removeAttr('disabled')
     }else{
       rows += '<option>Data Kosong</option>';
+      $('#oke').attr('disabled', 'true')
     }
 
     $('#sekolah').html(rows);
+  }
+
+  function changeSekolah(){
+    var sekolah = $('#sekolah').val()
+    if(sekolah){
+      $('#oke').prop('disabled', false)
+    }else{
+      $('#oke').prop('disabled', true)
+    }
   }
 </script>
 @endsection
@@ -65,5 +90,6 @@
     <br>
     {{-- <kuisioner></kuisioner> --}}
     @include('kuisioner.filter')
+    @include('kuisioner.form')
   </div>
 @endsection
