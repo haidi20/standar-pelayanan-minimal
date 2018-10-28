@@ -21,7 +21,7 @@ Route::get('kunci/detail','KunciController@detail')->name('kunci.detail');
 Route::get('kunci/simpan','KunciController@simpan')->name('kunci.simpan');
 
 // dashboard
-Route::get('dashboard', 'DashboardController@index')->name('dashboard.index');
+Route::get('dashboard', 'DashboardController@index')->name('dashboard.index')->middleware('auth');
 Route::get('dashboard/persen','DashboardController@persen')->name('dashboard.persen');
 Route::get('dashboard/pencapaian/vue','DashboardController@pencapaian');
 
