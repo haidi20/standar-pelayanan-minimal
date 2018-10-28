@@ -6,7 +6,7 @@
     href.each(function(){
       no = $(this).html()
       // console.log(no)
-      $(this).attr('href', '#')
+      $(this).attr("href", 'javascript:void(0)')
       $(this).attr('onClick', 'changePaginate('+no+')')
     });
     
