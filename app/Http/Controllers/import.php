@@ -3,12 +3,15 @@ namespace App\Http\Controllers;
 
 use App\Http\Controllers\Controller;
 
+use App\Models\Sekolah;
+
 use DB;
 use Excel;
 
 class import extends Controller {
 
-  public function run(){
+  public function run()
+  {
 
     //delete
     DB::table('sekolah')->delete();
@@ -18,7 +21,7 @@ class import extends Controller {
     DB::table('kecamatan')->delete();
     DB::table('pendidikan')->delete();
     DB::table('pertanyaan')->delete();
-    //end delete
+    //end delete nata
 
     //truncate
     DB::table('sekolah')->truncate();
@@ -38,6 +41,7 @@ class import extends Controller {
     $kecamatan      = storage_path('file/kecamatan.xlsx');
     $pendidikan     = storage_path('file/pendidikan.xlsx');
     $pertanyaan     = storage_path('file/pertanyaan.xlsx');
+
 
     $datasekolah    = Excel::load($sekolah)->get();
     $datajawaban    = Excel::load($jawaban)->get();

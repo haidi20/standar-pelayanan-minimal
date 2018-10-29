@@ -19,6 +19,7 @@ class CreateUsersTable extends Migration
             $table->string('email')->unique()->null();
             $table->string('password');
             $table->integer('sekolah_id')->unsigned();
+            $table->string('status')->null();
             $table->rememberToken();
             $table->timestamps();
         });

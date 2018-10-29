@@ -9,13 +9,20 @@ class Pertanyaan extends Model
     protected $table = 'pertanyaan';
 
     public function jawaban(){
-        return $this->hasMany('App\Models\Jawaban');
+        return $this->hasOne('App\Models\Jawaban', 'pertanyaan_id');
+    }
+
+    public function getJawabanKunciAttribute()
+    {
+        if($this->jawaban){
+            return $this->jawaban->id;
+        }
     }
 
     // scope
-    public function scopeKondisi($query){
-        if (request('tab')) {
-            $query->where('penyedia_id',request('tab'));
+    public function scopeKondisi($query, $tab){
+        if ($tab) {
+            $query->where('penyedia_id', $tab);
         }
     }
 

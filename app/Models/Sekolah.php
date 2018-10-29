@@ -7,6 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Sekolah extends Model
 {
     protected $table = 'sekolah';
+    protected $guarded = []; //TAMBAHKAN LINE INI
 
     public function kecamatan(){
         return $this->belongsTo('App\Models\Kecamatan');
@@ -22,7 +23,7 @@ class Sekolah extends Model
         }));
     }
 
-    public function scopeKondisi($query){
+    public function scopeKondisi($query, $kondisi = null){
       if (request('kuisioner')) {
         $query->where('kecamatan_id',request('kecamatan'))
               ->where('pendidikan_id',request('pendidikan'));
@@ -34,7 +35,9 @@ class Sekolah extends Model
           $query->where('kecamatan_id',request('kecamatan'));
         }
         if (request('sekolah')) {
-          $query->where('id',request('sekolah'));
+          if($kondisi == null){
+            $query->where('id',request('sekolah'));
+          }
         }
       }
     }

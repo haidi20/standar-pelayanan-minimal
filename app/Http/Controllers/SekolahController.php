@@ -11,6 +11,10 @@ use App\Models\Pendidikan;
 
 class SekolahController extends Controller
 {
+    public function __construct(Request $request){
+        $this->request = $request;
+    }
+
     public function baca(){
         return Sekolah::kondisi()->get();
     }

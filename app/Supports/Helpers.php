@@ -5,7 +5,7 @@
 if ( ! function_exists('kondisi_tulisan_error') )
 {
     function kondisi_tulisan_error($errors, $key){
-        return $errors->first($key) ;
+        return $errors->first($key);
     }
 }
 
@@ -54,3 +54,10 @@ if ( ! function_exists('kondisi_null') ) // kondisi datanya kosong atau tidak
     }
 }
 // end kubutuhan rumus
+
+if( ! function_exists('table_row_number') )
+{
+    function table_row_number($paginate, $index){
+        return $index+1+(($paginate->currentPage()-1)*$paginate->perPage());
+    }
+}

@@ -27,7 +27,7 @@ class IndikatorPencapaian {
       $this->dip      = $dip;
       $this->rumus    = $rumus;
       $this->jawaban  = $jawaban;
-      $this->sekolah  = $sekolah::kondisi()->get();
+      // $this->sekolah  = $sekolah::kondisi()->get();
   }
 
   public function duaSatu ($pilihan = null){
@@ -245,7 +245,7 @@ class IndikatorPencapaian {
       foreach ($this->sekolah as $index => $item) {
           for ($i=1; $i <= 6 ; $i++) {
               $id = $i + 57 ;
-              $data[$item->id][$i]      = $this->jawaban->kondisiJawaban($id,$item->id)->value('isi');
+              $data[$item->id][$i]      = $this->jawaban->kondisiJawaban($id,$item->id)->value('isi');  
           }
           $nama[$index] = ['nama'=>$item->nama];
       }
@@ -332,7 +332,7 @@ class IndikatorPencapaian {
 
   public function duaPuluhSatu($pilihan = null){
 
-      foreach ($this->sekolah as $index => $item) {
+      foreach ($this->sekolah as $index => $item){
           $jawSatu[$item->id]           = kondisi_null($this->jawaban->kondisiJawaban(78,$item->id)->value('isi'));
 
           $rumus[$item->id]             = number_format($this->rumus->duaPuluhSatu($jawSatu[$item->id]));

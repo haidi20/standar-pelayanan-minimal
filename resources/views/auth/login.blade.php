@@ -14,7 +14,8 @@
             <h3 class="panel-title">Login</h3>
         </div>
         <div class="panel-body">
-            <form role="form">
+            <form action="{{ route('login') }}" method="post">
+               {{ csrf_field() }}
                 <fieldset>
                     <div class="form-group">
                         <input class="form-control" placeholder="E-mail" name="email" type="email" autofocus="">
@@ -27,7 +28,8 @@
                             <input name="remember" type="checkbox" value="Remember Me">Remember Me
                         </label>
                     </div> --}}
-                    <a href="javascript:;" class="btn btn-sm btn-success col-md-offset-10">Kirim</a>
+                    {{-- <a href="javascript:;" class="btn btn-sm btn-success col-md-offset-10">Kirim</a> --}}
+                    <button type="submit" class="btn btn-success btn-md btn-block">Kirim</button>
                 </fieldset>
             </form>
         </div>
