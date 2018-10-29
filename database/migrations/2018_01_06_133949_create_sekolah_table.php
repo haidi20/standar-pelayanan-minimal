@@ -17,6 +17,7 @@ class CreateSekolahTable extends Migration
             $table->increments('id');
             $table->integer('pendidikan_id')->unsigned();
             $table->integer('kecamatan_id')->unsigned();
+            $table->string('kelurahan')->nullable();
             $table->integer('user_id')->unsigned();
             $table->integer('kunci')->default(0);
             $table->integer('hp')->unsigned()->nullable();

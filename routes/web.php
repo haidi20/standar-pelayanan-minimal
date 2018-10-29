@@ -40,3 +40,5 @@ Route::get('import','import@run');
 //auth laravel
 Auth::routes();
 Route::get('/home', 'HomeController@index')->name('home');
+
+Route::get('kecamatan', 'KecamatanController@kecamatan');
