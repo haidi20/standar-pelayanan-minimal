@@ -15,7 +15,7 @@
         @forelse ($sekolah as $index => $item)
           @if ($item->pendidikan && $item->kecamatan)
             <tr align="center">
-              <td>{{$index + 1}}</td>
+              <td>{{table_row_number($sekolah, $index)}}</td>
               <td>{{$item->nama}}</td>
               <td>{{$item->pendidikan->nama}}</td>
               <td>{{$item->kecamatan->nama}}</td>

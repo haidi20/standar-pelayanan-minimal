@@ -13,7 +13,7 @@
     <hr class="dashed mt20 mb20">
     <div class="row">
       <form action="{{route('sekolah.index')}}" method="get">
-        <kondisisekolah></kondisisekolah>
+        @include('sekolah.kondisi')
         <div class="col-md-1 oke">
           <button type="submit" class="btn btn-success btn-md">Oke</button>
         </div>
