@@ -87,8 +87,7 @@ class KuisionerController extends Controller
         $jawaban->isi   = $nilai;
         $jawaban->created_at = Carbon::now();
         $jawaban->save();
-        // return $jawaban;
-        return 'berhasil';
+        return $jawaban;
     }
 
     public function nomor()

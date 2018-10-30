@@ -128,12 +128,12 @@
     $.each(data, function(index, item){
       if(item.tanya == 1){
          rows += '<tr>'+
-                '<td>'+manage_row(nomor)+'</td>'+
-                '<td>'+item.keterangan+'</td>'+
-                '<td> <input type="text" id="pertanyaan_'+item.id+'" class="form-control form"'+
-                     'data-pertanyaan="'+item.id+'" data-sekolah="{{ request('sekolah') }}"'+
-                     'name="isi[]" value=""></td>'+
-              '</tr>';
+                    '<td>'+manage_row(nomor)+'</td>'+
+                    '<td>'+item.keterangan+'</td>'+
+                    '<td> <input type="text" id="pertanyaan_'+item.id+'" class="form-control form"'+
+                         'data-pertanyaan="'+item.id+'" data-sekolah="{{ request('sekolah') }}"'+
+                         'name="isi[]" value=""></td>'+
+                  '</tr>';
         nomor++;
       }else{
         rows += '<tr>'+
