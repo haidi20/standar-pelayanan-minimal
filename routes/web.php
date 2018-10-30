@@ -11,7 +11,7 @@ Route::get('pengguna/konfirmasi','PenggunaController@konfirmasi')->name('penggun
 
 // kuisioner
 Route::get('kuisioner','KuisionerController@index')->name('kuisioner.index');
-Route::get('kuisioner/store','KuisionerController@store');
+Route::post('kuisioner/store','KuisionerController@store');
 Route::get('kuisioner/info','KuisionerController@info');
 Route::get('kuisioner/table-satu/{kondisi}', 'KuisionerController@tableSatu');
 

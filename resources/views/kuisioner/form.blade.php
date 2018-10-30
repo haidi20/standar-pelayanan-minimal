@@ -10,6 +10,7 @@
     </ul>
     <div id="myTabContent" class="tab-content">
       <div class="tab-pane fade in" id="satu">
+        {!! Form::open(['class' => 'form form-horizontal', 'id' => 'kuisioner']) !!}
         <table class="table table-bordered table-custom">
           <thead>
             <tr>
@@ -26,18 +27,13 @@
                   <td width="100%">{{ $item->keterangan }}</td>
                   <td>
                     @if($item->input_pertanyaan)
-                      <input type="text" class="form-control form" 
-                           data-pertanyaan="{{ $item->id }}" 
-                           data-sekolah="{{ request('sekolah') }}" 
-                           name="isi[]" 
-                           value="{{ array_get($isi, $item->id) }}"
-                        >
+                      <input type="hidden" name="pertanyaan[]" value="{{ $item->id }}">
+                      <input type="hidden" name="sekolah[]" value="{{ request('sekolah') }}">
+                      <input type="text" class="form-control form" name="isi[]" value="{{ array_get($isi, $item->id) }}">
                     @elseif($item->pilihan_pertanyaan)
-                      <select class="form-control" 
-                          data-pertanyaan="{{ $item->id }}" 
-                            data-sekolah="{{ request('sekolah') }}" 
-                            name="isi[]" 
-                      >
+                      <input type="hidden" name="pertanyaan[]" value="{{ $item->id }}">
+                      <input type="hidden" name="sekolah[]" value="{{ request('sekolah') }}">
+                      <select class="form-control" name="isi[]">
                         <option value="1" {{ array_get($isi, $item->id) == 1 ? 'selected' : ''}}>Ya</option>
                         <option value="0" {{ array_get($isi, $item->id) == 0 ? 'selected' : ''}}>Tidak</option>
                       </select>
@@ -55,6 +51,7 @@
             @endforeach
           </tbody>
         </table>
+        {!! Form::close() !!}
         <div id="paginate">{!! $pertanyaanSatu->appends(Request::input()); !!}</div>
       </div>
       <div class="tab-pane fade in" id="dua">

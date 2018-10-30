@@ -44,37 +44,31 @@
 
   function changePaginate(id, tab = null)
   {
-    var kecamatan     = $('#kecamatan').val();
-    var pendidikan    = $('#pendidikan').val();
-    var sekolah       = $('#sekolah').val();
+    var kecamatan  = $('#kecamatan').val();
+    var pendidikan = $('#pendidikan').val();
+    var sekolah    = $('#sekolah').val();
+    var kuisioner  = $('#kuisioner').serialize();
+
     var urlParameter  = '?sekolah='+sekolah+'&kecamatan='+kecamatan+'&pendidikan='+pendidikan+'&page='+id;
-    
-    console.log(id)
-    $('input[name="isi[]"]').map(function(){
-      var pertanyaan  = $(this).attr('data-pertanyaan')
-      var nilai       = this.value
-      var sekolah     = $(this).attr('data-sekolah')
 
-      // console.log('id = ' + id + ' nilai = '+nilai + ' pertanyaan = '+pertanyaan+ ' sekolah = '+ sekolah );
+    $.ajax({
+      url: '{{ url('kuisioner/store') }}',
+      type: 'POST',
+      cache: false,
+      data: kuisioner,
+      success:function(data){ 
+        // console.log(data);  
+        window.location.href='{{url($baseUrl)}}'+urlParameter;
+      },
+      error:function(xhr, ajaxOptions, thrownError){
+        window.location.href='{{url($baseUrl)}}'+urlParameter;
+      }
+    });
+  }
 
-      $.ajax({
-        url: '{{ url('kuisioner/store') }}',
-        type: 'GET',
-        cache: false,
-        data: {nilai:nilai, pertanyaan:pertanyaan, sekolah:sekolah},
-        success:function(data){   
-          // console.log(data);          
-          // manageDataDropdownSekolah(data);
-          window.location.href='{{url($baseUrl)}}'+urlParameter;
-        },
-        error:function(xhr, ajaxOptions, thrownError){
-          window.location.href='{{url($baseUrl)}}'+urlParameter;
-          if(thrownError === 'Unauthorized'){
-
-          }
-        }
-      });
-    }).get();
+  function kondisiInputan(kondisi)
+  {
+    return kondisi;
   }
 
   function kondisi()
@@ -87,8 +81,7 @@
         type: 'GET',
         cache: false,
         data: {kecamatan:kecamatan, pendidikan:pendidikan},
-        success:function(data){   
-          // console.log(data);
+        success:function(data){ 
           manageDataDropdownSekolah(data);
         },
         error:function(xhr, ajaxOptions, thrownError){
@@ -111,7 +104,6 @@
       $.each(data, function(index, item){
         rows += '<option value="'+item.id+'">'+item.nama+'</option>';
       });
-      // $('#oke').removeAttr('disabled')
     }else{
       rows += '<option>Data Kosong</option>';
       $('#oke').attr('disabled', 'true')

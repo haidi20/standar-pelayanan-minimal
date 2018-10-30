@@ -80,13 +80,18 @@ class KuisionerController extends Controller
 
     public function store()
     {
-        $nilai          = request('nilai');
-        $pertanyaan_id  = request('pertanyaan');
-        $sekolah_id     = request('sekolah');
-        $jawaban        = $this->jawaban->updateOrCreate(compact('sekolah_id', 'pertanyaan_id'));
-        $jawaban->isi   = $nilai;
-        $jawaban->created_at = Carbon::now();
-        $jawaban->save();
+        $input = $this->request->except('_token');
+
+        for($i = 0; $i < count($input['isi']); $i++) {
+            $isi              = $input['isi'][$i];
+            $pertanyaan_id    = $input['pertanyaan'][$i];
+            $sekolah_id       = $input['sekolah'][$i];
+            $jawaban          = $this->jawaban->updateOrCreate(compact('sekolah_id', 'pertanyaan_id'));
+            $jawaban->isi     = $isi;
+            $jawaban->created_at = Carbon::now();
+            $jawaban->save();
+        }
+
         return $jawaban;
     }
 
