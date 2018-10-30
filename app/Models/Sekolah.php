@@ -35,10 +35,24 @@ class Sekolah extends Model
           $query->where('kecamatan_id',request('kecamatan'));
         }
         if (request('sekolah')) {
-          if($kondisi == null){
+          if($kondisi != 'kuisioner'){
             $query->where('id',request('sekolah'));
           }
         }
+      }
+    }
+
+    public function getKecamatanNamaAttribute()
+    {
+      if($this->kecamatan){
+        return $this->kecamatan->nama;
+      }
+    }
+
+    public function getPendidikanNamaAttribute()
+    {
+      if($this->pendidikan){
+        return $this->pendidikan->nama;
       }
     }
 }

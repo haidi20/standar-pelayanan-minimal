@@ -38,11 +38,12 @@ class KuisionerController extends Controller
         $pendidikan = $this->pendidikan->get();
         $jawaban    = $this->jawaban;
         $pertanyaan = $this->pertanyaan;
+        $nomorSatu  = $this->nomor();
+        $nomorDua   = $this->nomor();
         $baseUrl    = 'kuisioner';
         $sekolah    = [];
         $isi        = [];
-
-        // return $this->request->merge(['page' => 10]);
+        
         if(request('sekolah')){
             $sekolah = $this->sekolah->kondisi('kuisioner')->get();
         }
@@ -54,18 +55,14 @@ class KuisionerController extends Controller
         $pertanyaanSatu = $pertanyaan->kondisi(1)->paginate(10);
         $pertanyaanDua = $pertanyaan->kondisi(2)->paginate(10);
 
-        return view('kuisioner.index',compact('pertanyaanSatu', 'pertanyaanDua', 'kecamatan', 'pendidikan', 'sekolah', 'isi', 'baseUrl'));
+        return view('kuisioner.index',compact('pertanyaanSatu', 'pertanyaanDua', 'kecamatan', 'pendidikan', 'sekolah', 'isi', 'baseUrl', 'nomorSatu', 'nomorDua'));
     }
 
     public function tableSatu($kondisi)
     {
-         $pertanyaan = $this->pertanyaan;
-
-         // foreach ($pertanyaan->get() as $index => $item) {
-            $jawaban = $this->jawaban->kondisi(request('pertanyaan'), request('sekolah'))->value('isi');
-         // }
-         
-         $pertanyaan = $pertanyaan->kondisi(1)->limit(10)->get();
+        $pertanyaan     = $this->pertanyaan;
+        $jawaban        = $this->jawaban->kondisi(request('pertanyaan'), request('sekolah'))->value('isi');
+        $pertanyaan     = $pertanyaan->kondisi(1)->limit(10)->get();
 
          if($kondisi == 'pertanyaan'){
             return $pertanyaan;
@@ -76,9 +73,8 @@ class KuisionerController extends Controller
 
     public function info()
     {
-        $info       = Sekolah::kondisi()
-                             ->with('kecamatan')
-                             ->get();
+        $info       = Sekolah::kondisi()->with('kecamatan')->get();
+
         return $info;
     }
 
@@ -91,22 +87,25 @@ class KuisionerController extends Controller
         $jawaban->isi   = $nilai;
         $jawaban->created_at = Carbon::now();
         $jawaban->save();
-        return $jawaban;
+        // return $jawaban;
+        return 'berhasil';
+    }
 
-        // $jawaban->pertanyaan_id = $pertanyaan;  
-        // $jawaban->sekolah_id    = $sekolah;
-        // $
-        // foreach ($jawaban as $index => $item) {
-        //     // $nampung[$index] = 'isi = '.$item['isi']. ' pertanyaan = '. $item['pertanyaan'];
-        //     $pertanyaan_id                  = $item['pertanyaan'];
-        //     $sekolah_id                     = $item['sekolah'];
-        //     $isi                            = $item['isi'];
-            
-        //     $inputJawaban                   = Jawaban::updateOrCreate(compact('sekolah_id', 'pertanyaan_id'));
-        //     $inputJawaban->isi              = $item['isi'];
-        //     $inputJawaban->created_at       = Carbon::now();
-        //     $inputJawaban->save();
-        // }
-        // return $nampung;
+    public function nomor()
+    {
+        $no     = 0;
+        $page   = request('page');
+
+        if(request('page') > 1){
+            if($page == 5){
+                return $no = $no - 2;
+            }elseif($page == 6){
+                return $no = $no - 4;
+            }else{
+                return $no = $no - 1;
+            }
+        }else{
+            return 0;
+        }
     }
 }

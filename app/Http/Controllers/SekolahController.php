@@ -11,18 +11,25 @@ use App\Models\Pendidikan;
 
 class SekolahController extends Controller
 {
-    public function __construct(Request $request){
-        $this->request = $request;
-    }
-
-    public function baca(){
-        return Sekolah::kondisi()->get();
+    public function __construct(Request $request, Sekolah $sekolah, Kecamatan $kecamatan, Pendidikan $pendidikan){
+        $this->request      = $request;
+        $this->sekolah      = $sekolah;
+        $this->kecamatan    = $kecamatan;
+        $this->pendidikan   = $pendidikan;
     }
 
     public function index(){
-        $sekolah = Sekolah::kondisi()->paginate(10);
+        $sekolah        = $this->sekolah;
+        $filterSekolah  = [];
+        $pendidikan     = $this->pendidikan->all();
+        $kecamatan      = $this->kecamatan->all();
+        $dataSekolah    = $sekolah->kondisi()->paginate(10);
 
-        return view('sekolah.index',compact('sekolah'));
+        if(request('sekolah')){
+            $filterSekolah = $sekolah->kondisi('kuisioner')->get();
+        }
+
+        return view('sekolah.index',compact('pendidikan', 'kecamatan', 'dataSekolah', 'filterSekolah'));
     }
 
     public function create(){
@@ -87,5 +94,9 @@ class SekolahController extends Controller
         $sekolah->save();
 
         return redirect()->route('sekolah.index');
+    }
+
+    public function baca(){
+        return Sekolah::kondisi()->get();
     }
 }

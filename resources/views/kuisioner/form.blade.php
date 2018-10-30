@@ -20,31 +20,38 @@
           </thead>
           	<tbody id="tableSatu">
             @foreach($pertanyaanSatu as $index => $item)
-      				<tr>
-      					<td class="no">{{ table_row_number($pertanyaanSatu, $index) }}</td>
-      					<td width="100%">{{ $item->keterangan }}</td>
-      					<td>
-      						@if($item->pilihan == 0)
-      							<input type="text" class="form-control form" 
-      								   data-pertanyaan="{{ $item->id }}" 
-      								   data-sekolah="{{ request('sekolah') }}" 
-      								   name="isi[]" 
-      								   value="{{ array_get($isi, $item->id) }}"
-      						    >
-      						@elseif($item->pilihan == 1)
-      							<select class="form-control" 
-      									data-pertanyaan="{{ $item->id }}" 
-      								    data-sekolah="{{ request('sekolah') }}" 
-      								    name="isi[]" 
-      							>
-                      <option value="1" {{ array_get($isi, $item->id) == 1 ? 'selected' : ''}}>Ya</option>
-                      <option value="0" {{ array_get($isi, $item->id) == 0 ? 'selected' : ''}}>Tidak</option>
-                    </select>
-	                @else
-	                	<input type="hidden" name="isi[]">
-      						@endif
-      					</td>
-      				</tr>
+      				@if($item->kondisi_keterangan)
+                <tr>
+                  <td class="no">{{ table_row_number($pertanyaanSatu, $nomorSatu) }}</td>
+                  <td width="100%">{{ $item->keterangan }}</td>
+                  <td>
+                    @if($item->input_pertanyaan)
+                      <input type="text" class="form-control form" 
+                           data-pertanyaan="{{ $item->id }}" 
+                           data-sekolah="{{ request('sekolah') }}" 
+                           name="isi[]" 
+                           value="{{ array_get($isi, $item->id) }}"
+                        >
+                    @elseif($item->pilihan_pertanyaan)
+                      <select class="form-control" 
+                          data-pertanyaan="{{ $item->id }}" 
+                            data-sekolah="{{ request('sekolah') }}" 
+                            name="isi[]" 
+                      >
+                        <option value="1" {{ array_get($isi, $item->id) == 1 ? 'selected' : ''}}>Ya</option>
+                        <option value="0" {{ array_get($isi, $item->id) == 0 ? 'selected' : ''}}>Tidak</option>
+                      </select>
+                    @else
+                      <input type="hidden" name="isi[]">
+                    @endif
+                  </td>
+                </tr>
+                <?php $nomorSatu++ ?>
+              @else
+                <tr>
+                  <td colspan="3" >{{$item->keterangan}}</td>
+                </tr>
+              @endif
             @endforeach
           </tbody>
         </table>
@@ -61,31 +68,38 @@
           </thead>
             <tbody>
             @foreach($pertanyaanDua as $index => $item)
-              <tr>
-                <td class="no">{{ table_row_number($pertanyaanDua, $index) }}</td>
-                <td width="100%">{{ $item->keterangan }}</td>
-                <td>
-                  @if($item->pilihan == 0)
-                    <input type="text" class="form-control form" 
-                         data-pertanyaan="{{ $item->id }}" 
-                         data-sekolah="{{ request('sekolah') }}" 
-                         name="isi[]" 
-                         value="{{ array_get($isi, $item->id) }}"
+              @if($item->kondisi_keterangan)
+                <tr>
+                  <td class="no">{{ table_row_number($pertanyaanDua, $nomorDua) }}</td>
+                  <td width="100%">{{ $item->keterangan }}</td>
+                  <td>
+                    @if($item->input_pertanyaan)
+                      <input type="text" class="form-control form" 
+                           data-pertanyaan="{{ $item->id }}" 
+                           data-sekolah="{{ request('sekolah') }}" 
+                           name="isi[]" 
+                           value="{{ array_get($isi, $item->id) }}"
+                        >
+                    @elseif($item->pilihan_pertanyaan)
+                      <select class="form-control" 
+                          data-pertanyaan="{{ $item->id }}" 
+                            data-sekolah="{{ request('sekolah') }}" 
+                            name="isi[]" 
                       >
-                  @elseif($item->pilihan == 1)
-                    <select class="form-control" 
-                        data-pertanyaan="{{ $item->id }}" 
-                          data-sekolah="{{ request('sekolah') }}" 
-                          name="isi[]" 
-                    >
-                      <option value="1" {{ array_get($isi, $item->id) == 1 ? 'selected' : ''}}>Ya</option>
-                      <option value="0" {{ array_get($isi, $item->id) == 0 ? 'selected' : ''}}>Tidak</option>
-                    </select>
-                  @else
-                    <input type="hidden" name="isi[]">
-                  @endif
-                </td>
-              </tr>
+                        <option value="1" {{ array_get($isi, $item->id) == 1 ? 'selected' : ''}}>Ya</option>
+                        <option value="0" {{ array_get($isi, $item->id) == 0 ? 'selected' : ''}}>Tidak</option>
+                      </select>
+                    @else
+                      <input type="hidden" name="isi[]">
+                    @endif
+                  </td>
+                </tr>
+                <?php $nomorDua++ ?>
+              @else
+                <tr>
+                  <td colspan="3" >{{$item->keterangan}}</td>
+                </tr>
+              @endif
             @endforeach
           </tbody>
         </table>

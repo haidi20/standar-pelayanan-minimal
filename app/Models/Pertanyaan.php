@@ -31,4 +31,25 @@ class Pertanyaan extends Model
             $jawaban->where('sekolah_id',request('sekolah'));
         }));
     }
+
+    public function getKondisiKeteranganAttribute()
+    {
+        if($this->tanya == 1){
+            return true;
+        }
+    }
+
+    public function getInputPertanyaanAttribute()
+    {
+        if($this->pilihan == 0 && $this->kondisi_keterangan){
+            return true;
+        }
+    }
+
+    public function getPilihanPertanyaanAttribute()
+    {
+         if($this->pilihan == 1 && $this->kondisi_keterangan){
+            return true;
+        }
+    }
 }
