@@ -55,7 +55,7 @@ class KuisionerController extends Controller
         $pertanyaanSatu = $pertanyaan->kondisi(1)->paginate(10);
         $pertanyaanDua = $pertanyaan->kondisi(2)->paginate(10);
 
-        return view('kuisioner.index',compact('pertanyaanSatu', 'pertanyaanDua', 'kecamatan', 'pendidikan', 'sekolah', 'isi', 'baseUrl', 'nomorSatu', 'nomorDua'));
+        return view('kuisioner.index',compact('pertanyaanSatu', 'pertanyaanDua', 'kecamatan', 'pendidikan', 'sekolah', 'isi', 'baseUrl', 'nomorSatu', 'nomorDua', 'tab'));
     }
 
     public function tableSatu($kondisi)
@@ -82,13 +82,13 @@ class KuisionerController extends Controller
     {
         $input = $this->request->except('_token');
 
-        for($i = 0; $i < count($input['isi']); $i++) {
-            $isi              = $input['isi'][$i];
-            $pertanyaan_id    = $input['pertanyaan'][$i];
-            $sekolah_id       = $input['sekolah'][$i];
-            $jawaban          = $this->jawaban->updateOrCreate(compact('sekolah_id', 'pertanyaan_id'));
-            $jawaban->isi     = $isi;
-            $jawaban->created_at = Carbon::now();
+        for($i = 0; $i < count($input['isi']); $i++){
+            $isi                    = $input['isi'][$i];
+            $pertanyaan_id          = $input['pertanyaan'][$i];
+            $sekolah_id             = $input['sekolah'][$i];
+            $jawaban                = $this->jawaban->updateOrCreate(compact('sekolah_id', 'pertanyaan_id'));
+            $jawaban->isi           = $isi;
+            $jawaban->created_at    = Carbon::now();
             $jawaban->save();
         }
 

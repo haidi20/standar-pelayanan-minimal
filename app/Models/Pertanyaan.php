@@ -12,17 +12,13 @@ class Pertanyaan extends Model
         return $this->hasOne('App\Models\Jawaban', 'pertanyaan_id');
     }
 
-    public function getJawabanKunciAttribute()
-    {
-        if($this->jawaban){
-            return $this->jawaban->id;
-        }
-    }
-
     // scope
     public function scopeKondisi($query, $tab){
-        if ($tab) {
+        if($tab){
             $query->where('penyedia_id', $tab);
+        }
+        if(request('pendidikan')){
+            $query->where('pendidikan_id', request('pendidikan'));
         }
     }
 
@@ -50,6 +46,13 @@ class Pertanyaan extends Model
     {
          if($this->pilihan == 1 && $this->kondisi_keterangan){
             return true;
+        }
+    }
+
+    public function getJawabanKunciAttribute()
+    {
+        if($this->jawaban){
+            return $this->jawaban->id;
         }
     }
 }

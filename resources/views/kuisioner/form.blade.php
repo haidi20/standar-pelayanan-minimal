@@ -7,6 +7,7 @@
       <li class="" id="linkDua" onClick="changeTab(2)"><a href="#dua" data-toggle="tab">
         Pelayanan Pendidikan Dasar oleh Satuan Pendidikan
       </a></li>
+      <input type="hidden" id="tab" value="{{request('tab') ? request('tab') : 1}}">
     </ul>
     <div id="myTabContent" class="tab-content">
       <div class="tab-pane fade in" id="satu">
@@ -104,6 +105,6 @@
       </div>
     </div>
   <div class="col-md-1 col-md-offset-11">
-    <button type="submit" class="btn btn-md btn-success">Kirim</button>
+    <button type="submit" class="btn btn-md btn-success" onClick="store('{{ request('page') }}')">Kirim</button>
   </div>
 </div>

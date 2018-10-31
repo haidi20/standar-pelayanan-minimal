@@ -4,13 +4,12 @@
   $(function(){
     var href = $('#paginate ul li a');
     href.each(function(){
-      no = $(this).html()
-      // console.log(no)
+      page = $(this).html()
       $(this).attr("href", 'javascript:void(0)')
-      $(this).attr('onClick', 'changePaginate('+no+')')
+      $(this).attr('onClick', 'store('+page+' , 1)')
     });
     
-    var tab = $.session.get('tab')
+    var tab = $('#tab').val()
     if (tab == 1){
       $('#satu').addClass('active')
       $('#linkSatu').addClass('active')
@@ -42,14 +41,16 @@
       });
   }
 
-  function changePaginate(id, tab = null)
+  function store(page, tab = null)
   {
     var kecamatan  = $('#kecamatan').val();
     var pendidikan = $('#pendidikan').val();
     var sekolah    = $('#sekolah').val();
     var kuisioner  = $('#kuisioner').serialize();
 
-    var urlParameter  = '?sekolah='+sekolah+'&kecamatan='+kecamatan+'&pendidikan='+pendidikan+'&page='+id;
+    var urlParameter  = '?sekolah='+sekolah+'&kecamatan='+kecamatan+'&pendidikan='+pendidikan+'&page='+page+'&tab='+tab
+
+    console.log(urlParameter)
 
     $.ajax({
       url: '{{ url('kuisioner/store') }}',
@@ -57,18 +58,12 @@
       cache: false,
       data: kuisioner,
       success:function(data){ 
-        // console.log(data);  
-        window.location.href='{{url($baseUrl)}}'+urlParameter;
+        window.location.href = '{{url($baseUrl)}}'+urlParameter;
       },
       error:function(xhr, ajaxOptions, thrownError){
-        window.location.href='{{url($baseUrl)}}'+urlParameter;
+        window.location.href = '{{url($baseUrl)}}'+urlParameter;
       }
     });
-  }
-
-  function kondisiInputan(kondisi)
-  {
-    return kondisi;
   }
 
   function kondisi()
@@ -132,7 +127,9 @@
                   '<td colspan="3">'+item.keterangan+'</td>'+
                 '</tr>';
       }
-              fetchIsi(item.id)
+
+      fetchIsi(item.id)
+
     });
 
     $('#tableSatu').html(rows);
@@ -167,14 +164,21 @@
 
   function changeTab(tab)
   {
-    var nomor = $.session.set('tab', tab);
-    // console.log($.session.get('tab'));
+    $('#tab').val(tab)
+    var tab = $('#tab').val()
+
+    var href = $('#paginate ul li a');
+    href.each(function(){
+      page = $(this).html()
+      $(this).attr("href", 'javascript:void(0)')
+      $(this).attr('onClick', 'store('+page+' , '+tab+')')
+    });
   }
 
   function manage_row(index)
-{
-    return index + 1;
-}
+  {
+      return index + 1;
+  }
 </script>
 @endsection
 @section('konten')
