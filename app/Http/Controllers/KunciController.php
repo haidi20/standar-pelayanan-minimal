@@ -10,6 +10,13 @@ use App\Models\Kecamatan;
 
 class KunciController extends Controller
 {
+    public function __construct()
+    {
+        view()->share([
+            'active' => 'kunci'
+        ]);
+    }
+
     public function index(){
         $d_kecamatan = Kecamatan::all();
         $t_kecamatan = Kecamatan::kondisi()

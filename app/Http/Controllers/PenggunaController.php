@@ -14,6 +14,13 @@ use App\Models\Pendidikan;
 
 class PenggunaController extends Controller
 {
+    public function __construct()
+    {
+        view()->share([
+            'active' => 'pengguna'
+        ]);
+    }
+
     public function index(){
         $pengguna = User::kondisi()
                         ->paginate(10);

@@ -33,6 +33,10 @@ class DashboardController extends Controller
         $this->pendidikan   = $pendidikan;
         $this->rumus        = $rumus;
         $this->request      = $request;
+
+        view()->share([
+            'active' => 'dashboard'
+        ]);
     }
 
     public function index()

@@ -16,6 +16,10 @@ class SekolahController extends Controller
         $this->sekolah      = $sekolah;
         $this->kecamatan    = $kecamatan;
         $this->pendidikan   = $pendidikan;
+
+         view()->share([
+            'active' => 'sekolah'
+        ]);
     }
 
     public function index(){

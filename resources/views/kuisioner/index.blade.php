@@ -24,6 +24,13 @@
     if(page > 2){
       changeTableSatu(page)
     }
+
+    var sekolah = $('#sekolah').val()
+    if(sekolah){
+      $('#oke').removeAttr('disabled')
+    }else{
+      $('#oke').attr('disabled', 'true')
+    }
   });
 
   function changeTableSatu(page)
@@ -104,6 +111,8 @@
       $.each(data, function(index, item){
         rows += '<option value="'+item.id+'">'+item.nama+'</option>';
       });
+
+      $('#oke').attr('disabled', 'false')
     }else{
       rows += '<option>Data Kosong</option>';
       $('#oke').attr('disabled', 'true')
@@ -197,10 +206,14 @@
       </div>
     </div>
     <hr class="dashed mt20 mb20">
-    {{-- @include('kuisioner.info') --}}
-    <br>
-    {{-- <kuisioner></kuisioner> --}}
-    @include('kuisioner.filter')
+    <div class="row">
+      <form action="{{route('kuisioner.index')}}" method="get">
+        @include('kuisioner.kondisi')
+        <div class="col-md-1 oke">
+          <button type="submit" id="oke" class="btn btn-success btn-md">Oke</button>
+        </div>
+      </form>
+    </div>
     @include('kuisioner.form')
   </div>
 @endsection

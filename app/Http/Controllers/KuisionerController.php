@@ -30,6 +30,10 @@ class KuisionerController extends Controller
         $this->kecamatan    = $kecamatan;
         $this->pendidikan   = $pendidikan;
         $this->request      = $request;
+
+        view()->share([
+            'active' => 'kuisioner'
+        ]);
     }
 
     public function index()

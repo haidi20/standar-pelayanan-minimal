@@ -13,9 +13,9 @@
 
     <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
       <ul class="nav navbar-nav ukuranHuruf">
-        <li><a href="{{route('dashboard.index')}}">Dashboard</a></li>
-        <li><a href="{{route('sekolah.index')}}">Daftar Sekolah</a></li>
-        <li><a href="{{route('kuisioner.index')}}" >Input Data</a></li>
+        <li class="{{$active == 'dashboard' ? 'active' : ''}}"><a href="{{route('dashboard.index')}}">Dashboard</a></li>
+        <li class="{{$active == 'sekolah' ? 'active' : ''}}"><a href="{{route('sekolah.index')}}">Daftar Sekolah</a></li>
+        <li class="{{$active == 'kuisioner' ? 'active' : ''}}"><a href="{{route('kuisioner.index')}}" >Input Data</a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right ukuranHuruf">
         <li class="dropdown">
