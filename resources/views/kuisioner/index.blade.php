@@ -5,10 +5,12 @@
     var href = $('#paginate ul li a');
     href.each(function(){
       page = $(this).html()
+      var tab = $('#tab').val()
       $(this).attr("href", 'javascript:void(0)')
-      $(this).attr('onClick', 'store('+page+' , 1)')
+      $(this).attr('onClick', 'store('+page+' , '+tab+')')
     });
     
+    // tab di dapatkan dari input yang terhidden //
     var tab = $('#tab').val()
     if (tab == 1){
       $('#satu').addClass('active')
@@ -41,6 +43,7 @@
       });
   }
 
+  // setiap pindah paginate dan tombol kirim akan ke fungsi store //  
   function store(page, tab = null)
   {
     var kecamatan  = $('#kecamatan').val();
@@ -66,6 +69,7 @@
     });
   }
 
+  // filtering data  //
   function kondisi()
   {
     var kecamatan   = $('#kecamatan').val();
@@ -90,6 +94,7 @@
     }
   }
 
+  // memunculkan pilihan sekolah jika pendidikan dan kecamatan sudah di pilih //
   function manageDataDropdownSekolah(data)
   {
     var rows = '';
@@ -107,6 +112,7 @@
     $('#sekolah').html(rows);
   }
 
+  // kalo di tab 2 berada di page > 2 maka di tab 1 automatis di page 1 //
   function manageDataTableSatu(data)
   {
     var rows = '';
@@ -135,6 +141,7 @@
     $('#tableSatu').html(rows);
   }
 
+  // memasukkan nilai berdasarkan pertanyaan *berhubungan dengan fungsi manageDataTableSatu //
   function fetchIsi(pertanyaan)
   {
     var sekolah = {{request('sekolah') ? request('sekolah') : 0}} ;
@@ -151,6 +158,7 @@
       });
   }
 
+  // kondisi dropdown sekolah kalo ada nilai maka disabled hilang //
   function changeSekolah()
   {
     var sekolah = $('#sekolah').val();
