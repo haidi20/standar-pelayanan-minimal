@@ -107,7 +107,7 @@
     var rows = '';
 
     if(data){
-      rows += '<option value="">Semua Sekolah</option>';
+      rows += '<option value="">Pilih Sekolah</option>';
       $.each(data, function(index, item){
         rows += '<option value="'+item.id+'">'+item.nama+'</option>';
       });
