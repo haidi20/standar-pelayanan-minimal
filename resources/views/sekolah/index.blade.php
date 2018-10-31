@@ -1,5 +1,43 @@
 @extends('_layouts.default')
 
+@section('script-bottom')
+<script>
+  function kondisi()
+  {
+    var kecamatan   = $('#kecamatan').val()
+    var pendidikan  = $('#pendidikan').val()
+
+    $.ajax({
+      url: '{{ url('sekolah/vue') }}',
+      type: 'GET',
+      cache: false,
+      data: {kecamatan:kecamatan, pendidikan:pendidikan},
+      success:function(data){ 
+        manageDataDropdownSekolah(data);
+      },
+      error:function(xhr, ajaxOptions, thrownError){
+        if(thrownError === 'Unauthorized'){
+          window.location.href = '{{ url('logout') }}';
+        }
+      }
+    });
+  }
+
+  function manageDataDropdownSekolah(data)
+  {
+    var rows = '';
+
+    rows += '<option value="">Semua Sekolah</option>';
+    
+    $.each(data, function(index, item){
+      rows += '<option value="'+item.id+'">'+item.nama+'</option>';
+    });
+
+    $('#sekolah').html(rows);
+  }
+</script>
+@endsection
+
 @section('konten')
   <div class="container">
     <div class="row">

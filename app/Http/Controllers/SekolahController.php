@@ -20,13 +20,13 @@ class SekolahController extends Controller
 
     public function index(){
         $sekolah        = $this->sekolah;
-        $filterSekolah  = [];
+        $filterSekolah  = $this->sekolah;
         $pendidikan     = $this->pendidikan->all();
         $kecamatan      = $this->kecamatan->all();
         $dataSekolah    = $sekolah->kondisi()->paginate(10);
 
         if(request('sekolah')){
-            $filterSekolah = $sekolah->kondisi('kuisioner')->get();
+            $filterSekolah = $sekolah->kondisi('kuisioner');
         }
 
         return view('sekolah.index',compact('pendidikan', 'kecamatan', 'dataSekolah', 'filterSekolah'));
