@@ -55,4 +55,11 @@ class Pertanyaan extends Model
             return $this->jawaban->id;
         }
     }
+
+    public function getBukanTanyaAttribute()
+    {
+        if($this->tanya == 0){
+            return count($this->tanya);
+        }
+    }
 }

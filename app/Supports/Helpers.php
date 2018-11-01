@@ -61,3 +61,10 @@ if( ! function_exists('table_row_number') )
         return $index+1+(($paginate->currentPage()-1)*$paginate->perPage());
     }
 }
+
+if( ! function_exists('total_bukan_tanya') )
+{
+    function total_bukan_tanya($value){
+        return count($value);
+    }
+}
