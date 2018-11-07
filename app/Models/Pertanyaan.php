@@ -18,7 +18,7 @@ class Pertanyaan extends Model
             $query->where('penyedia_id', $tab);
         }
         if(request('pendidikan')){
-            $query->where('pendidikan_id', request('pendidikan'));
+            $query->where('pendidikan_id', request('pendidikan'))->orWhere('pendidikan_id', 3);
         }
     }
 

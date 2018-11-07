@@ -11,8 +11,14 @@ class Jawaban extends Model
     protected $table = 'jawaban';
     public $fillable = ['pertanyaan_id','sekolah_id','isi'];
 
-    public function sekolah(){
+    public function sekolah()
+    {
         return $this->belongsTo('App\Models\Sekolah');
+    }
+
+    public function pertanyaan()
+    {
+        return $this->belongsTo('App\Models\Pertanyaan');
     }
 
     public function scopeKondisi($query,$pertanyaan,$sekolah)
@@ -24,7 +30,8 @@ class Jawaban extends Model
 
         if(request('tahun')){
         	$kondisi = $kondisi->whereYear('created_at', request('tahun'));
-        }elseif(request('periode')){
+        }
+        if(request('periode')){
         	$kondisi = $kondisi->whereBetWeen('created_at', [$dariPeriode, $kePeriode]);
         }
 

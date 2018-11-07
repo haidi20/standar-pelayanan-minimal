@@ -43,9 +43,9 @@ if ( ! function_exists('kondisi_jumlah_data') ) // kondisi apakah datanya 1 atau
     }
 }
 
-if ( ! function_exists('kondisi_null') ) // kondisi datanya kosong atau tidak
+if ( ! function_exists('kondisi_kosong') ) // kondisi datanya kosong atau tidak
 {
-    function kondisi_null($data){
+    function kondisi_kosong($data){
         if ($data == null) {
             return 0;
         }else{
