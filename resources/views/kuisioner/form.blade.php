@@ -1,12 +1,18 @@
 <div class="row">
   <div class="col-md-12">
     <ul class="nav nav-tabs">
-      <li class="" id="linkSatu" onClick="changeTab(1)"><a href="#satu" data-toggle="tab" >
-        Pelayanan Pendidikan oleh Pemerintah Kota
-      </a></li>
-      <li class="" id="linkDua" onClick="changeTab(2)"><a href="#dua" data-toggle="tab">
-        Pelayanan Pendidikan Dasar oleh Satuan Pendidikan
-      </a></li>
+      <li class="" id="linkSatu" onClick="changeTab(1)">
+        <a href="#satu" data-toggle="tab" >
+          Pelayanan Pendidikan oleh Pemerintah Kota
+        </a>
+      </li>
+      @if(count($pertanyaanDua) != 0)
+        <li class="" id="linkDua" onClick="changeTab(2)">
+          <a href="#dua" data-toggle="tab">
+            Pelayanan Pendidikan Dasar oleh Satuan Pendidikan
+          </a>
+        </li>
+      @endif
       <input type="hidden" id="tab" value="{{request('tab') ? request('tab') : 1}}">
     </ul>
     <div id="myTabContent" class="tab-content">
@@ -25,7 +31,7 @@
       				@if($item->kondisi_keterangan)
                 <tr>
                   <td class="no">{{ table_row_number($pertanyaanSatu, $nomorSatu) }}</td>
-                  <td width="100%">{{ $item->keterangan }}</td>
+                  <td width="85%">{{ $item->keterangan }}</td>
                   <td>
                     @if($item->input_pertanyaan)
                       <input type="hidden" name="pertanyaan[]" value="{{ $item->id }}">

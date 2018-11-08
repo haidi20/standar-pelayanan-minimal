@@ -16,8 +16,8 @@ class Pertanyaan extends Model
     public function scopeKondisi($query, $tab){
         $query->where('penyedia_id', $tab);
 
-        if(request('pendidikan') != null){
-            $query->where('pendidikan_id', request('pendidikan'))->orWhere('pendidikan_id', 3);
+        if(request('pendidikan')){
+            $query->where('pendidikan_id', request('pendidikan'))->orWhere('pendidikan_id', 3)->where('penyedia_id', $tab);
         }
     }
 

@@ -42,8 +42,8 @@ class KuisionerController extends Controller
         $pendidikan = $this->pendidikan->get();
         $jawaban    = $this->jawaban;
         $pertanyaan = $this->pertanyaan;
-        $nomorSatu  = $this->nomor();
-        $nomorDua   = $this->nomor();
+        $nomorSatu  = $this->nomorSatu();
+        $nomorDua   = $this->nomorDua();
         $baseUrl    = 'kuisioner';
         $sekolah    = [];
         $isi        = [];
@@ -99,7 +99,23 @@ class KuisionerController extends Controller
         return $jawaban;
     }
 
-    public function nomor()
+    public function nomorSatu()
+    {
+        $no     = 0;
+        $page   = request('page');
+
+        if(request('page') > 1){
+            if($page >= 4){
+                return $no = $no - 2;
+            }else{
+                return $no = $no - 1;
+            }
+        }else{
+            return 0;
+        }
+    }
+
+    public function nomorDua()
     {
         $no     = 0;
         $page   = request('page');
