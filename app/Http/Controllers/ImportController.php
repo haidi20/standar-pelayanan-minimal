@@ -8,7 +8,7 @@ use App\Models\Sekolah;
 use DB;
 use Excel;
 
-class import extends Controller {
+class ImportController extends Controller {
 
   public function run()
   {
@@ -21,7 +21,7 @@ class import extends Controller {
     DB::table('kecamatan')->delete();
     DB::table('pendidikan')->delete();
     DB::table('pertanyaan')->delete();
-    //end delete nata
+    //end delete
 
     //truncate
     DB::table('sekolah')->truncate();
@@ -40,7 +40,7 @@ class import extends Controller {
     $penyedia       = storage_path('file/penyedia.xlsx');
     $kecamatan      = storage_path('file/kecamatan.xlsx');
     $pendidikan     = storage_path('file/pendidikan.xlsx');
-    $pertanyaan     = storage_path('file/pertanyaan.xlsx');
+    $pertanyaan     = storage_path('file/pertanyaann.xlsx');
 
 
     $datasekolah    = Excel::load($sekolah)->get();
@@ -111,10 +111,5 @@ class import extends Controller {
     $masukpendidikan   = DB::table('pendidikan')->insert($inputpendidikan);
     $masukpertanyaan   = DB::table('pertanyaan')->insert($inputpertanyaan);
 
-    // if ($masukKecamatan && $masukKategori && $masukPendidikan && $masuksekolah && $masukpertanyaan && $masukketerangan ) {
-    //   return 'berhasil 3 table';
-    // }else{
-    //   return 'gagal 3 table';
-    // }
   }
 }

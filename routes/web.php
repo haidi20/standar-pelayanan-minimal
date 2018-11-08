@@ -35,7 +35,7 @@ Route::resource('sekolah','SekolahController');
 Route::resource('pengguna','PenggunaController');
 
 //import dari excel
-Route::get('import','import@run');
+Route::get('import','ImportController@run');
 
 //auth laravel
 Auth::routes();

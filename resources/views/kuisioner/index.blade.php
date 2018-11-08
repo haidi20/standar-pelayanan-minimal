@@ -21,7 +21,7 @@
     }
 
     var page = {{ request('page') ? request('page') : 0 }}
-    if(page > 2){
+    if(page > 7){
       changeTableSatu(page)
     }
 
