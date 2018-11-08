@@ -20,8 +20,9 @@
       $('#linkDua').addClass('active')
     }
 
-    var page = {{ request('page') ? request('page') : 0 }}
-    if(page > 7){
+    var page      = {{ request('page') ? request('page') : 0 }}
+    var lastPage  = {{ $pertanyaanSatu->lastPage() }}
+    if(page > lastPage){
       changeTableSatu(page)
     }
 
